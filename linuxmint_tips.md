@@ -1,7 +1,5 @@
 ### linux Mint桌面技巧
 
-#### 安装完毕之后的步骤
-
 ##### 高分屏相关问题
 * 高分屏需要通过system setting的display设定分辨率
 * 默认桌面窗口的边框阴影丑陋，需要通过system setting的preference的extensions安装
@@ -17,3 +15,7 @@ Better transparency for windows以及CUstom Shadows两个扩展即可
     
 > 移除完之后重新启动,在输入法切换到中文时就可以看到sunpinyin的提示,并且会弹出候选框列表,而且此时Fcitx配置中外观选项也出现了有效信息.
 * 除了此方法以外还可以通过设置Fcitx的Addon选项来解决该问题即禁止Fcitx中Kimpanel的支持
+
+##### 如何在崩溃后重启Cinnamon
+
+>  要重启Cinnamon，按下Alt + F2 将会打开一个命令菜单，输入r并按下回车。
