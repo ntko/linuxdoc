@@ -7,9 +7,16 @@
 
     Mostly, we use `git config --global`
     
-#### 初始化git
+#### 配置git
     $ git config --global user.name "Last First"
     $ git config --global user.email fakeuser@msn.com
     
 > 使用 `git config --global -e` 可以查看config文件所在的位置。
+
 > 在linux mint上，global的位置为：/home/`current_username`/.gitconfig
+
+#### 初始化git repository
+
+> 使用 `$ git init` 可以将当前目录初始化为git repository
+
+> 使用 `$ git clone https://github.com/libgit2/libgit2` 从远程仓库初始化.
