@@ -15,6 +15,8 @@
 
 > 在linux mint上，global的位置为：/home/`current_username`/.gitconfig
 
+> 使用`git config --list`可以查看当前配置。
+
 #### 初始化git repository
 
 > 使用 `$ git init` 可以将当前目录初始化为git repository
