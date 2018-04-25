@@ -1,5 +1,5 @@
   
-##LINUX命令工具
+## LINUX命令工具
 
 ### 包管理工具apt
 
@@ -29,7 +29,7 @@
 *    apt-get autoclean 清理无用的包
 *    apt-get check 检查是否有损坏的依赖
 
-##Windows10命令工具
+## Windows10命令工具
 
 ### Windows10下如何查看哪些软件或进程占用了网速
     运行perfmon -res 即可。
