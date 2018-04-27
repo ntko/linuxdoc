@@ -13,3 +13,6 @@
 
 #### 复杂示例下载Magnet Bittorrent URL:(注意要使用引号引用URL)
     aria2c -d ./download -l log.txt --bt-save-metadata=true "magnet:?xt=urn:btih:54dca0477d74d88ed051a9cd62fe5359151e7823&dn=elementaryos-0.4.1-stable.20180214.iso"
+
+#### 复杂示例下载2个Bittorrent File:
+    aria2c aria2c -d H:\ubantusetup H:\ubantusetup\ubuntu-18.04-desktop-amd64.iso.torrent H:\ubantusetup\ubuntu-18.04-live-server-amd64.iso.torrent
