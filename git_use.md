@@ -34,7 +34,7 @@ ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/quest
 
     `git config --global user.email`
 
-1. Find your GitHub noreply address in your GitHub's Personal Settings → Emails. It's mentioned in the description of the Keep my email address private checkbox. Usually, it starts with a unique identifier, plus your username:
+1. Find your GitHub noreply address in your GitHub's [Personal Settings → Emails](https://github.com/settings/emails). It's mentioned in the description of the Keep my email address private checkbox. Usually, it starts with a unique identifier, plus your username:
 
     `{ID}+{username}@users.noreply.github.com`
 
