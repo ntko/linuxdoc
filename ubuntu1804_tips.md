@@ -20,3 +20,5 @@
 > On the first tab Appearance there is a toggle switch
 >
 > Animations. That's it!
+
+![disable animations](imgs/disableanimation)
