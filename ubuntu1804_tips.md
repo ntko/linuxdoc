@@ -21,4 +21,4 @@
 >
 > Animations. That's it!
 
-![disable animations](imgs/disableanimation)
+![disable animations](imgs/disableanimation.png)
