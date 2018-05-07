@@ -15,19 +15,20 @@
 
 > 在Software & updates 设定中开启Canonical相关的软件即可找到.
 
+##### Ubuntu中设定点击DOCK图标最小化应用.
+
+from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/](http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/)
+
+> 1. `gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'|'previews'`  //其中preview是原始值
+> 1. 使用Dconf Editor软件.参考上面的值修改.
+
 ##### How to disable animations in Ubuntu 17.10 or 18.04?
 
 * To disable animations,first install Gnome Tweak Tool:
 
     `sudo apt install gnome-tweak-tool`
 
-> Then launch tool either from command line by running
->
-> gnome-tweak-tool or by using dash and searching for Tweak.
->
-> On the first tab Appearance there is a toggle switch
->
-> Animations. That's it!
+> Then launch tool either from command line by running gnome-tweak-tool or by using dash and searching for Tweak. On the first tab Appearance there is a toggle switch Animations. That's it!
 
 ![disable animations](imgs/disableanimation.png)
 
