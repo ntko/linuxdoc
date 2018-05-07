@@ -8,3 +8,15 @@
 ##### vscode and git
 
 *  `git config --global credential.helper wincred`可以不再提示输入密码？测试似乎不行。
+
+
+##### 安装vscode的c/c++扩展
+
+> 如下图所示:
+
+![安装vscode扩展](imgs/installcppexts.png)
+
+##### 安装必须的编译环境
+
+> `sudo apt-get install build-essential`
+

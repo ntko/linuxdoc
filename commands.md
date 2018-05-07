@@ -29,6 +29,10 @@
 *    apt-get autoclean 清理无用的包
 *    apt-get check 检查是否有损坏的依赖
 
+#### 缩放图像的工具
+
+> `convert -scale 50%x50% installcppext.png installcppexts.png`
+
 #### linux之sed用法
 
 > 原始文档:[linux之sed用法](http://www.cnblogs.com/dong008259/archive/2011/12/07/2279897.html)
@@ -121,7 +125,7 @@ sed命令行格式为：
     插入
 
     [root@localhost ruby] # sed -i '$a bye' ab         #在文件ab中最后行直接输入"bye"
-    
+
     [root@localhost ruby]# cat ab
     Hello!
     ruby is me,welcome to my blog.
