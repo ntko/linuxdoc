@@ -19,6 +19,14 @@
 
 ![安装vscode扩展](imgs/installcppexts.png)
 
+##### vscode c++扩展需要glibc2.1.8以上,查看glibc版本:
+
+> `ldd --version`
+
+this will output such as:
+
+> ldd (Ubuntu GLIBC 2.27-3ubuntu1) 2.27
+
 ##### 安装必须的编译环境
 
 > `sudo apt-get install build-essential`
