@@ -30,3 +30,12 @@
 > Animations. That's it!
 
 ![disable animations](imgs/disableanimation.png)
+
+#### [6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)
+
+1. Install Preload: `sudo apt-get install preload`
+1. Control Startup apps: DOCK->search startup,可以看到启动应用.如果要看到所有的系统启动应用,可以运行`sudo sed -i "s/NoDisplay=true/NoDisplay=false/g" /etc/xdg/autostart/*.desktop`,然后重新查看启用应用就可以看到系统应用了.
+1. 使用更轻量级的桌面和应用.
+1. setting里面关闭search
+1. 编辑GRUB,加速系统启动.`sudo vi /etc/default/grub` Change the value of GRUB_TIMEOUT to 2,然后,`sudo update-grub2` 使改变生效.
+1. 参考上面一条关闭动画.
