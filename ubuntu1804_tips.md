@@ -88,3 +88,32 @@ Ubuntu has several repositories from where it provides software for your system.
 #### 安装多媒体相关软件
 
 > `sudo apt install ubuntu-restricted-extras`
+
+
+#### 关于GDM问题(a stop job is running for session c1 of user root 1 min 30 s)
+
+> `sudo vi /etc/systemd/system.conf`
+
+找到DefaultTimeoutStopSec=90s  //此处修改为10S即可.
+
+然后执行：systemctl daemon-reload
+
+#### 创建指向文件夹的快捷方式到dock
+
+>  在`"/usr/share/applications"`目录下,创建`devprojects.desktop`文件:
+
+    #!/usr/bin/env xdg-open
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Icon[en_US]=gnome-panel-launcher
+    Exec=nautilus /home/tanger/devprojects
+    Name[en_US]=devprojects
+    Comment[en_US]=devprojects
+    Name=devprojects
+    Comment=devprojects
+    Icon=gnome-panel-launcher
+
+#### 在文件管理器中,`Ctrl+D`快捷键可加入书签
+
+#### 在文件管理器中,点击右上角的 Newtab按钮可使用多个页签
