@@ -100,6 +100,11 @@ Ubuntu has several repositories from where it provides software for your system.
 
 #### 创建指向文件夹的快捷方式到dock
 
+> 参考资料:
+* [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html)
+* [How To Add Shortcuts To Favorites In Gnome-Shell [Ubuntu]](https://geekitdown.com/how-to-add-shortcuts-to-favorites-in-gnome-shell-ubuntu/)
+
+
 >  在`"/usr/share/applications"`目录下,创建`devprojects.desktop`文件:
 
     #!/usr/bin/env xdg-open
