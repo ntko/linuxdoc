@@ -23,6 +23,20 @@
 
 > 使用 `$ git clone https://github.com/libgit2/libgit2` 从远程仓库初始化.
 
+#### create a new repository on the command line
+
+    echo "# vscodeFirst" >> README.md
+    git init
+    git add README.md
+    git commit -m "first commit"
+    git remote add origin https://github.com/ntko/vscodeFirst.git
+    git push -u origin master
+
+####  push an existing repository from the command line
+
+    git remote add origin https://github.com/ntko/vscodeFirst.git
+    git push -u origin master
+
 
 #### Meaning of the GitHub message: push declined due to email privacy restrictions
 
