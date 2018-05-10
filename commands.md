@@ -33,6 +33,12 @@
 
 > `convert -scale 50%x50% installcppext.png installcppexts.png`
 
+#### 显示文件的前几行内容
+
+> The following example will show first 3 lines from /etc/passwd file:
+
+    `head -3 /etc/passwd`
+
 #### linux之sed用法
 
 > 原始文档:[linux之sed用法](http://www.cnblogs.com/dong008259/archive/2011/12/07/2279897.html)

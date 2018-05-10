@@ -51,3 +51,32 @@ ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/quest
 1. Now you can push the commit with the noreply e-mail address, and future commits will have the noreply e-mail address as well.
 
      `git push`
+
+#### .gitignore FILE
+
+> [A collection of useful .gitignore templates](https://github.com/github/gitignore)
+
+> 用来配置哪些文件将被忽略.一个示例文件如下:
+
+>
+
+    # ignore all .a or .o files
+    *.[oa]
+
+    # ignore files end with ~
+    *~
+
+    # but do track lib.a, even though you're ignoring .a files above
+    !lib.a
+
+    # only ignore the TODO file in the current directory, not subdir/TODO
+    /TODO
+
+    # ignore all files in the build/ directory
+    build/
+
+    # ignore doc/notes.txt, but not doc/server/arch.txt
+    doc/*.txt
+
+    # ignore all .pdf files in the doc/ directory and any of its subdirectories
+    doc/**/*.pdf
