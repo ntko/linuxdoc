@@ -122,3 +122,7 @@ Ubuntu has several repositories from where it provides software for your system.
 #### 在文件管理器中,`Ctrl+D`快捷键可加入书签
 
 #### 在文件管理器中,点击右上角的 Newtab按钮可使用多个页签
+
+#### 安装文件管理器扩展
+
+> `sudo apt-get install nautilus-image-converter`
