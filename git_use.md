@@ -23,6 +23,18 @@
 
 > 使用 `$ git clone https://github.com/libgit2/libgit2` 从远程仓库初始化.
 
+#### Caching your GitHub password in Git
+
+> 1. In Terminal, enter the following:
+
+    $ git config --global credential.helper cache
+    # Set git to use the credential memory cache
+
+> 2. To change the default password cache timeout, enter the following:
+
+    $ git config --global credential.helper 'cache --timeout=3600'
+    # Set the cache to timeout after 1 hour (setting is in seconds)
+
 #### create a new repository on the command line
 
     echo "# vscodeFirst" >> README.md
