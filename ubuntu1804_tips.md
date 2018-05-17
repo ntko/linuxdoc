@@ -126,3 +126,9 @@ Ubuntu has several repositories from where it provides software for your system.
 #### 安装文件管理器扩展
 
 > `sudo apt-get install nautilus-image-converter`
+
+
+#### Ubuntu下的Chrome浏览器占用内存过多
+
+> 关闭Setting里面的高级设定里面的GPU加速.
+
