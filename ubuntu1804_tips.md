@@ -132,3 +132,8 @@ Ubuntu has several repositories from where it provides software for your system.
 
 > 关闭Setting里面的高级设定里面的GPU加速.
 
+#### Linux下按进程实时统计网络带宽利用率
+
+> 适用于Linux操作系统的开源网络监视工具.比如说,你可以用命令iftop来检查带宽使用情况. netstat用来查看接口统计报告,还有top监控系统当前运行进程.但是如果你想要找一个能够按进程实时统计网络带宽利用率,那么NetHogs就是你所需要的唯一工具.
+
+`sudo nethogs`

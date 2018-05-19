@@ -31,7 +31,7 @@
 
 #### 缩放图像的工具
 
-> `convert -scale 50%x50% installcppext.png installcppexts.png`
+> `convert -scale 50%x50% installcppext.png installcppextsLittle.png`
 
 #### 显示文件的前几行内容
 
