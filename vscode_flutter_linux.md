@@ -37,16 +37,19 @@
 
 #### Set up your Android device
 
-> To prepare to run and test your Flutter app on an Android device, you’ll need an Android device running Android 4.1 (API level 16) or higher.
+To prepare to run and test your Flutter app on an Android device, you’ll need an Android device running Android 4.1 (API level 16) or higher.
 
-> Enable Developer options and USB debugging on your device. Detailed instructions are available in the Android documentation.
+Enable Developer options and USB debugging on your device. Detailed instructions are available in the Android documentation.
 Using a USB cable, plug your phone into your computer. If prompted on your device, authorize your computer to access your device.
 In the terminal, run the:
 
 > `flutter devices` 
 
->command to verify that Flutter recognizes your connected Android device.
-Start your app by running flutter run.
+command to verify that Flutter recognizes your connected Android device.
+Start your app by running 
+
+> `flutter run.`
+
 By default, Flutter uses the version of the Android SDK where your adb tool is based. If you want Flutter to use a different installation of the Android SDK, you must set the ANDROID_HOME environment variable to that installation directory.
 
 ![flutter devices命令](imgs/flutter_devices.png)
