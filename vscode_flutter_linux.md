@@ -221,9 +221,9 @@ To see your changes invoke **`Save`** (`cmd-s / ctrl-s`), or click the Hot Reloa
         class MyApp extends StatelessWidget {
           @override
           Widget build(BuildContext context) {
-            <div style="background-color:rgba(0, 0, 0, 0.0470588);">
-            final wordPair = new WordPair.random();
-            </div>
+              
+<div style="background-color:rgba(0, 0, 0, 0.0470588);">final wordPair = new WordPair.random();</div>
+
             return new MaterialApp(
               title: 'Welcome to Flutter',
               home: new Scaffold(
