@@ -211,7 +211,7 @@ To see your changes invoke **`Save`** (`cmd-s / ctrl-s`), or click the Hot Reloa
 
     > Tip: “Pascal case” (also known as “upper camel case”), means that each word in the string, including the first one, begins with an uppercase letter. So, “uppercamelcase” becomes “UpperCamelCase”.
 
-1. Make the following changes, as highlighted below:
+1. Make the following changes, as below:
 
         import 'package:flutter/material.dart';
         import 'package:english_words/english_words.dart';
@@ -221,9 +221,7 @@ To see your changes invoke **`Save`** (`cmd-s / ctrl-s`), or click the Hot Reloa
         class MyApp extends StatelessWidget {
           @override
           Widget build(BuildContext context) {
-              
-<div style="background-color:rgba(0, 0, 0, 0.0470588);">final wordPair = new WordPair.random();</div>
-
+            final wordPair = new WordPair.random(); // ++++ add this line
             return new MaterialApp(
               title: 'Welcome to Flutter',
               home: new Scaffold(
@@ -231,8 +229,8 @@ To see your changes invoke **`Save`** (`cmd-s / ctrl-s`), or click the Hot Reloa
                   title: new Text('Welcome to Flutter'),
                 ),
                 body: new Center(
-                  //child: new Text('Hello World'), // Replace the highlighted text...
-                  child: new Text(wordPair.asPascalCase),  // With this highlighted         text.
+                  //child: new Text('Hello World'), // Replace this ...
+                  child: new Text(wordPair.asPascalCase), //With this text.
                 ),
               ),
             );

@@ -8,6 +8,7 @@
     Mostly, we use `git config --global`
     
 #### 配置git
+
     $ git config --global user.name "Last First"
     $ git config --global user.email fakeuser@msn.com
     
@@ -34,6 +35,23 @@
 
     $ git config --global credential.helper 'cache --timeout=3600'
     # Set the cache to timeout after 1 hour (setting is in seconds)
+
+#### Using credential helpers to cache passwords
+
+> [REF:https://git.seveas.net/using-credential-helpers-to-cache-passwords.html](https://git.seveas.net/using-credential-helpers-to-cache-passwords.html)
+
+While the cache helper is certainly useful, it still makes you type in your password regularly. There are a few other helpers that actually store your password on disk, some more secure than others.
+
+    git config --global credential.helper store
+    git config --global credential.helper netrc
+
+The store and netrc helpers use unencrypted plain-text files for storing credentials. The store helper has its own format, the netrc helper will read your .netrc file. These are useful if you cannot use any of the credential helpers below, which all require a desktop environment.
+
+    git config --global credential.helper store wincred
+    git config --global credential.helper store osxkeychain
+    git config --global credential.helper store gnome-keyring
+
+The wincred, osxkeychain and gnome-keyring credential helpers integrate with the secure credential storage provided by Windows, OSX and Gnome. These are the preferred credential helpers as they never store passwords unencrypted.
 
 #### create a new repository on the command line
 
