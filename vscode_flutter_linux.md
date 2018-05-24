@@ -236,3 +236,38 @@ To see your changes invoke **`Save`** (`cmd-s / ctrl-s`), or click the Hot Reloa
             );
           }
         }
+
+#### Add a Stateful widget
+
+Stateless widgets are immutable, meaning that their properties can’t change—all values are final.
+
+Stateful widgets maintain state that might change during the lifetime of the widget. Implementing a stateful widget requires at least two classes: 
+
+1. a StatefulWidget class that creates an instance of 
+2. a State class. The StatefulWidget class is, itself, immutable, but the State class persists over the lifetime of the widget.
+
+* The main method specifies fat arrow (=>) notation, which is short hand used for one-line functions or methods.
+ 
+* The app extends StatelessWidget which makes the app itself a widget. In Flutter, almost everything is a widget, including alignment, padding, and layout.
+ 
+* The Scaffold widget, from the Material library, provides a default app bar, title, and a body property that holds the widget tree for the home screen. The widget subtree can be quite complex.
+ 
+* A widget’s main job is to provide a build() method that describes how to display the widget in terms of other, lower level widgets.
+
+> Tip: In Flutter’s react style framework, calling setState() triggers a call to the build() method for the State object, resulting in an update to the UI. For example:
+
+    onTap: () {
+      setState(() {
+        if (alreadySaved) {
+          _saved.remove(pair);
+        } else {
+          _saved.add(pair);
+        }
+      });
+    },
+
+> Tip: Some widget properties take a single widget (child), and other properties, such as action, take an array of widgets (children), as indicated by the square brackets ([]). For example:
+
+    actions: <Widget>[
+        new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved),
+    ],  
