@@ -13,3 +13,35 @@
 
     PATH="$PATH:/usr/lib/dart/bin"
     PATH="$PATH":"~/.pub-cache/bin"
+
+#### First web server powered by Aqueduct
+
+* [SEE:https://aqueduct.io/](https://aqueduct.io/)
+
+*  [ORIGINAL:Building RESTful Web APIs with Dart, Aqueduct, and PostgreSQL — Part 1](https://itnext.io/building-restful-web-apis-with-dart-aqueduct-and-postgresql-3cc9b931f777)
+
+##### Aqueduct:
+
+An object-oriented, multi-threaded HTTP framework mobile developers will love.
+
+#####  install Aqueduct:
+
+    pub global activate aqueduct
+
+#####  Change to working directory and create our project:
+
+    aqueduct create websvr && cd websvr    
+
+We should now be in the websvr directory with all the project files. For now we’ll focus on:
+
+    bin/
+    main.dart
+    lib/
+    fave_reads_sink.dart
+    pubspec.yaml
+
+**`bin/main.dart`** creates our server and starts the app
+**`lib/fave_reads_sink.dart`** sets up your application with its configuration
+**`pubspec.yaml`** contains metadata about the project. Similar to having a **`package.json`** for **`Node.js`** development. Now we can start the application using either commands below:
+
+    aqueduct serve # or `dart bin/main.dart`
