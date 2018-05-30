@@ -45,3 +45,14 @@ We should now be in the websvr directory with all the project files. For now weâ
 **`pubspec.yaml`** contains metadata about the project. Similar to having a **`package.json`** for **`Node.js`** development. Now we can start the application using either commands below:
 
     aqueduct serve # or `dart bin/main.dart`
+
+> TIP: Instead, `aqueduct serve` and `dart bin/main.dart` have different behaviors. It seems `aqueduct serve` always listen to the port 8081(or through `config.yaml` may be?), although we specified 8080:
+
+    ..configuration.port = 8080;
+
+![aqueduct serve listen on port 8081](imgs/aqueductserve.png)
+
+##### About the "'unnecessary_brace_in_string_interp' is not a recognized lint rule" lint message
+
+just put a `#` in front of the line as comment.
+
