@@ -2,12 +2,12 @@
 
 #### REF:
 
-* [Things to do After Installing Ubuntu 18.04](https://itsfoss.com/things-to-do-after-installing-ubuntu-18-04/)
-* [24 Must Have Essential Linux Applications](https://itsfoss.com/essential-linux-applications/)
-* [Top 20 GNOME Extensions You Should Be Using Right Now](https://itsfoss.com/best-gnome-extensions/)
+1. [Things to do After Installing Ubuntu 18.04](https://itsfoss.com/things-to-do-after-installing-ubuntu-18-04/)
+1. [24 Must Have Essential Linux Applications](https://itsfoss.com/essential-linux-applications/)
+1. [Top 20 GNOME Extensions You Should Be Using Right Now](https://itsfoss.com/best-gnome-extensions/)
 
 #### 高分屏相关问题
-* 高分屏需要通过system setting的display设定分辨率
+1. 高分屏需要通过system setting的display设定分辨率
 
 #### 如何在崩溃后重启桌面
 
@@ -25,13 +25,13 @@
 
 from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/](http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/)
 
-> 1. `gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'|'previews'`  //其中preview是原始值
-> 1. 以上可以使用`gsettings reset org.gnome.shell.extensions.dash-to-dock click-action`恢复.
-> 1. 使用Dconf Editor软件.参考上面的值修改.
+>    * `gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'|'previews'`  //其中preview是原始值
+>    * 以上可以使用`gsettings reset org.gnome.shell.extensions.dash-to-dock click-action`恢复.
+>    * 使用Dconf Editor软件.参考上面的值修改.
 
 #### How to disable animations in Ubuntu 17.10 or 18.04?
 
-* To disable animations,first install Gnome Tweak Tool:
+1. To disable animations,first install Gnome Tweak Tool:
 
     `sudo apt install gnome-tweak-tool`
 
@@ -72,12 +72,12 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 
 Ubuntu has several repositories from where it provides software for your system. These repositories are:
 
-* Main – Free and open-source software supported by Ubuntu team
-* Universe – Free and open-source software maintained by the community
-* Restricted – Proprietary drivers for devices.
-* Multiverse – Software restricted by copyright or legal issues.
-* Canonical Partners – Software packaged by Ubuntu for their partners 
-* Enabling all these repositories will give you access to more software and proprietary drivers.
+1. Main – Free and open-source software supported by Ubuntu team
+1. Universe – Free and open-source software maintained by the community
+1. Restricted – Proprietary drivers for devices.
+1. Multiverse – Software restricted by copyright or legal issues.
+1. Canonical Partners – Software packaged by Ubuntu for their partners 
+1. Enabling all these repositories will give you access to more software and proprietary drivers.
 
 
 #### 安装Gnome扩展
@@ -101,8 +101,8 @@ Ubuntu has several repositories from where it provides software for your system.
 #### 创建指向文件夹的快捷方式到dock
 
 > 参考资料:
-* [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html)
-* [How To Add Shortcuts To Favorites In Gnome-Shell [Ubuntu]](https://geekitdown.com/how-to-add-shortcuts-to-favorites-in-gnome-shell-ubuntu/)
+1. [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html)
+1. [How To Add Shortcuts To Favorites In Gnome-Shell [Ubuntu]](https://geekitdown.com/how-to-add-shortcuts-to-favorites-in-gnome-shell-ubuntu/)
 
 
 >  在`"/usr/share/applications"`目录下,创建`devprojects.desktop`文件:
@@ -137,3 +137,54 @@ Ubuntu has several repositories from where it provides software for your system.
 > 适用于Linux操作系统的开源网络监视工具.比如说,你可以用命令iftop来检查带宽使用情况. netstat用来查看接口统计报告,还有top监控系统当前运行进程.但是如果你想要找一个能够按进程实时统计网络带宽利用率,那么NetHogs就是你所需要的唯一工具.
 
 `sudo nethogs`
+
+#### User and group management related
+
+> In GUI, Ubuntu software ,search `gnome-system-tools` and install;
+
+OR
+
+> `useradd` in command line.
+
+##### /etc/passwd and /etc/shadow
+
+> `cat /etc/passwd`
+
+    tanger:x:1000:1000:tanger,,,:/home/tanger:/bin/bash
+    postgres:x:121:127:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash
+
+The fields, in order from left to right, are:[1]
+
+1. User name: the string a user would type in when logging into the operating system: the logname. Must be unique across users listed in the file.
+1. Information used to validate a user's password; in most modern uses, this field is usually set to "x" (or "*", or some other indicator) with the actual password information being stored in a separate shadow password file. On Linux systems, setting this field to an asterisk ("*") is a common way to disable direct logins to an account while still preserving its name, while another possible value is "*NP*" which indicates to use an NIS server to obtain the password.[2] Without password shadowing in effect, this field would typically contain a cryptographic hash of the user's password (in combination with a salt).
+1. user identifier number, used by the operating system for internal purposes. It need not be unique.
+1. group identifier number, which identifies the primary group of the user; all files that are created by this user may initially be accessible to this group.
+1. Gecos field, commentary that describes the person or account. Typically, this is a set of comma-separated values including the user's full name and contact details.
+1. Path to the user's home directory.
+1. Program that is started every time the user logs into the system. For an interactive user, this is usually one of the system's command line interpreters (shells).
+
+> `sudo cat /etc/shadow`
+
+    tanger:$1$EJkrNPNC$Xv2Mrg791YiK5hIml36tc1:17648:0:99999:7:::
+    postgres:*:17683:0:99999:7:::
+
+1. User login name
+1. salt and hashed password OR a status exception value e.g.:
+    * "$id$salt$hashed", the printable form of a password hash as produced by crypt (C), where "$id" is the algorithm used. (On GNU/Linux, "$1$" stands for MD5, "$2a$" is Blowfish, "$2y$" is Blowfish (correct handling of 8-bit chars), "$5$" is SHA-256 and "$6$" is SHA-512,[4] other Unix may have different values, like NetBSD. Key stretching is used to increase password cracking difficulty, using by default 1000 rounds of modified MD5,[5] 64 rounds of Blowfish, 5000 rounds of SHA-256 or SHA-512.[6] The number of rounds may be varied for Blowfish, or for SHA-256 and SHA-512 by using e.g. "$6$rounds=50000$".
+    * Empty string – No password, the account has no password (reported by passwd on Solaris with "NP").[7]
+    * "!" – the account is password locked, user will be unable to log in via password authentication but other methods (e.g. ssh key) may be still allowed.[8]
+    * "*LK*" or "*" – the account is locked, user will be unable to log in via password authentication but other methods (e.g. ssh key) may be still allowed.[8]
+    * "!!" – the password has never been set (RedHat)[9]
+1. Days since epoch of last password change
+1. Days until change allowed
+1. Days before change required
+1. Days warning for expiration
+1. Days before account inactive
+1. Days since epoch when account expires
+Reserved    
+
+##### change file/dir ownner,group,and permissions
+
+    sudo chown postgres:adm postgresql-10-data.log 
+    sudo chmod 640 postgresql-10-data.log
+    sudo chown -R postgres:postgres data //where -R merns recursive
