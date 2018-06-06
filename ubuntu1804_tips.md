@@ -188,3 +188,11 @@ Reserved
     sudo chown postgres:adm postgresql-10-data.log 
     sudo chmod 640 postgresql-10-data.log
     sudo chown -R postgres:postgres data //where -R merns recursive
+
+##### `sodo cd dir` cann't work?
+
+Because cd is not a command. to issue:
+
+    sudo -i -u postgres
+    sudo -i //run as root
+    su postgres //need login!!
