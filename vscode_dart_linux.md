@@ -108,8 +108,249 @@ To create a list that’s a compile-time constant, add const before the list lit
     var constantList = const [1, 2, 3];
     // constantList[1] = 1; // Uncommenting this causes an error.
 
+#### Maps
+In general, a map is an object that associates keys and values. Both keys and values can be any type of object. Each key occurs only once, but you can use the same value multiple times. Dart support for maps is provided by map literals and the Map type.
 
+Here are a couple of simple Dart maps, created using map literals:
 
+    var gifts = {
+      // Key:    Value
+      'first': 'partridge',
+      'second': 'turtledoves',
+      'fifth': 'golden rings'
+    };
+
+    var nobleGases = {
+      2: 'helium',
+      10: 'neon',
+      18: 'argon',
+    };
+> Note: The analyzer infers that gifts has the type Map<String, String> and nobleGases has the type Map<int, String>. If you try to add the wrong type of value to either map, the analyzer or runtime raises an error. For more information, read about type inference.
+
+You can create the same objects using a Map constructor:
+
+    var gifts = new Map();
+    gifts['first'] = 'partridge';
+    gifts['second'] = 'turtledoves';
+    gifts['fifth'] = 'golden rings';
+
+    var nobleGases = new Map();
+    nobleGases[2] = 'helium';
+    nobleGases[10] = 'neon';
+    nobleGases[18] = 'argon';
+
+Add a new key-value pair to an existing map just as you would in JavaScript:
+
+    var gifts = {'first': 'partridge'};
+    gifts['fourth'] = 'calling birds'; // Add a key-value pair
+Retrieve a value from a map the same way you would in JavaScript:
+
+    var gifts = {'first': 'partridge'};
+    assert(gifts['first'] == 'partridge');
+
+If you look for a key that isn’t in a map, you get a null in return:
+
+    var gifts = {'first': 'partridge'};
+    assert(gifts['fifth'] == null);
+
+Use .length to get the number of key-value pairs in the map:
+
+    var gifts = {'first': 'partridge'};
+    gifts['fourth'] = 'calling birds';
+    assert(gifts.length == 2);
+
+To create a map that’s a compile-time constant, add const before the map literal:
+
+    final constantMap = const {
+        2: 'helium',
+        10: 'neon',
+        18: 'argon',
+    };
+
+    // constantMap[2] = 'Helium'; // Uncommenting this causes an error.
+
+#### Runes
+In Dart, runes are the UTF-32 code points of a string.
+
+Unicode defines a unique numeric value for each letter, digit, and symbol used in all of the world’s writing systems. Because a Dart string is a sequence of UTF-16 code units, expressing 32-bit Unicode values within a string requires special syntax.
+
+The usual way to express a Unicode code point is \uXXXX, where XXXX is a 4-digit hexidecimal value. For example, the heart character (♥) is \u2665. To specify more or less than 4 hex digits, place the value in curly brackets. For example, the laughing emoji (😆) is \u{1f600}.
+
+The String class has several properties you can use to extract rune information. The codeUnitAt and codeUnit properties return 16-bit code units. Use the runes property to get the runes of a string.
+
+The following example illustrates the relationship between runes, 16-bit code units, and 32-bit code points:
+
+    main() {
+      var clapping = '\u{1f44f}';
+      print(clapping);
+      print(clapping.codeUnits);
+      print(clapping.runes.toList());
+
+      Runes input = new Runes(
+          '\u2665  \u{1f605}  \u{1f60e}  \u{1f47b}  \u{1f596}  \u{1f44d}');
+      print(new String.fromCharCodes(input));
+    }
+
+> Note: Be careful when manipulating runes using list operations. This approach can easily break down, depending on the particular language, character set, and operation. For more information, see How do I reverse a String in Dart? on Stack Overflow.
+
+#### How do I reverse a String in Dart?
+
+    var input = "Music \u{1d11e} for the win"; // Music 𝄞 for the win
+    print(input.split('').reversed.join()); // niw eht rof
+
+The split function explicitly warns against this problem (with an example):
+
+> Splitting with an empty string pattern ('') splits at UTF-16 code unit boundaries and not at rune boundaries[.]
+
+There is an easy fix for this: instead of reversing the individual code-units one can reverse the runes:
+
+    var input = "Music \u{1d11e} for the win"; // Music 𝄞 for the win
+    print(new String.fromCharCodes(input.runes.toList().reversed)); // niw eht rof 𝄞 cisuM
+
+But that's not all. Runes, too, can have a specific order. This second obstacle is much harder to solve. A simple example:
+
+    var input =  'Ame\u{301}lie'; // Amélie
+    print(new String.fromCharCodes(input.runes.toList().reversed)); // eiĺemA
+Note that the accent is on the wrong character.
+
+#### Symbols
+A Symbol object represents an operator or identifier declared in a Dart program. You might never need to use symbols, but they’re invaluable for APIs that refer to identifiers by name, because minification changes identifier names but not identifier symbols.
+
+To get the symbol for an identifier, use a symbol literal, which is just # followed by the identifier:
+
+    #radix
+    #bar
+Symbol literals are compile-time constants.
+
+#### Functions
+
+Dart is a true object-oriented language, so even functions are objects and have a type, Function. This means that functions can be assigned to variables or passed as arguments to other functions. You can also call an instance of a Dart class as if it were a function. For details, see `Callable classes`.
+
+Here’s an example of implementing a function:
+
+    bool isNoble(int atomicNumber) {
+      return _nobleGases[atomicNumber] != null;
+    }
+Although Effective Dart recommends `type annotations for public APIs`, the function still works if you omit the types:
+
+    isNoble(atomicNumber) {
+      return _nobleGases[atomicNumber] != null;
+    }
+For functions that contain just one expression, you can use a shorthand syntax:
+
+    bool isNoble(int atomicNumber) => _nobleGases[atomicNumber] != null;
+
+The => expr syntax is a shorthand for { return expr; }. The => notation is sometimes referred to as **`fat arrow syntax`**.
+
+> Note: Only an expression—not a statement—can appear between the arrow (=>) and the semicolon (;). For example, you can’t put an if statement there, but you can use a conditional expression.
+
+A function can have two types of parameters: required and optional. The required parameters are listed first, followed by any optional parameters.
+
+##### Optional parameters
+Optional parameters can be either positional or named, **but not both**.
+
+###### Optional named parameters
+
+When defining a function, use **`{param1, param2, …}`** to specify named parameters:
+
+    /// Sets the [bold] and [hidden] flags ...
+    void enableFlags({bool bold, bool hidden}) {
+      // ...
+    }
+
+When calling a function, you can specify named parameters using paramName: value. For example:
+
+    enableFlags(bold: true, hidden: false);
+
+default values for named parameters:
+
+    /// Sets the [bold] and [hidden] flags ...
+    void enableFlags({bool bold = false, bool hidden = false}) {
+      // ...
+    }
+
+    // bold will be true; hidden will be false.
+    enableFlags(bold: true);    
+
+###### Optional positional parameters
+Wrapping a set of function parameters **`in [] marks`** them as optional positional parameters:
+
+    String say(String from, String msg, [String device]) {
+      var result = '$from says $msg';
+      if (device != null) {
+        result = '$result with a $device';
+      }
+      return result;
+    }
+Here’s an example of calling this function without the optional parameter:
+
+    assert(say('Bob', 'Howdy') == 'Bob says Howdy');
+
+default values for positional parameters:
+
+    String say(String from, String msg,
+        [String device = 'carrier pigeon', String mood]) {
+      var result = '$from says $msg';
+      if (device != null) {
+        result = '$result with a $device';
+      }
+      if (mood != null) {
+        result = '$result (in a $mood mood)';
+      }
+      return result;
+    }   
+
+> You can also pass lists or maps as default values. The following example defines a function, doStuff(), that specifies a default list for the list parameter and a default map for the gifts parameter.
+
+    void doStuff(
+        {List<int> list = const [1, 2, 3],
+        Map<String, String> gifts = const {
+          'first': 'paper',
+          'second': 'cotton',
+          'third': 'leather'
+        }}) {
+      print('list:  $list');
+      print('gifts: $gifts');
+    }    
+
+##### Functions as first-class objects
+You can pass a function as a parameter to another function. For example:
+
+    void printElement(int element) {
+      print(element);
+    }
+
+    var list = [1, 2, 3];
+
+    // Pass printElement as a parameter.
+    list.forEach(printElement);
+
+> TIP:when we say `first-class-object`,means the function is `AS SAME AS VARIABLE`,can be assgined to variables, or, as be passed as parameter to other functions.
+
+You can also assign a function to a variable, such as:
+
+    var loudify = (msg) => '!!! ${msg.toUpperCase()} !!!';
+    assert(loudify('hello') == '!!! HELLO !!!');
+
+This example uses an anonymous function. More about those in the next section.
+
+##### Anonymous functions
+Most functions are named, such as main() or printElement(). You can also create a nameless function called an anonymous function, or sometimes a lambda or closure. You might assign an anonymous function to a variable so that, for example, you can add or remove it from a collection.
+
+An anonymous function looks similar to a named function— zero or more parameters, separated by commas and optional type annotations, between parentheses.
+
+The code block that follows contains the function’s body:
+
+    ([[Type] param1[, …]]) { 
+      codeBlock; 
+    }; 
+
+The following example defines an anonymous function with an untyped parameter, item. The function, invoked for each item in the list, prints a string that includes the value at the specified index.
+
+    var list = ['apples', 'bananas', 'oranges'];
+    list.forEach((item) {
+      print('${list.indexOf(item)}: $item');
+    });
 
 
 ### First web server powered by Aqueduct
