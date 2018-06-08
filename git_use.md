@@ -124,3 +124,46 @@ ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/quest
 
     # ignore all .pdf files in the doc/ directory and any of its subdirectories
     doc/**/*.pdf
+
+#### Delete File
+
+To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The git rm command does that, and also removes the file from your working directory so you don’t see it as an untracked file the next time around.
+
+If you simply remove the file from your working directory, it shows up under the “Changes not staged for commit”
+
+    $ rm PROJECTS.md
+
+Then, if you run git rm, it stages the file’s removal.
+
+    $ git rm PROJECTS.md
+
+Another useful thing you may want to do is to keep the file in your working tree but remove it from your staging area. In other words, you may want to keep the file on your hard drive but not have Git track it anymore. This is particularly useful if you forgot to add something to your .gitignore file and accidentally staged it, like a large log file or a bunch of .a compiled files. To do this, use the --cached option:
+
+    $ git rm --cached README
+
+You can pass files, directories, and file-glob patterns to the git rm command. That means you can do
+things such as:
+
+    $ git rm log/\*.log
+
+Note the backslash (\) in front of the *. This is necessary because Git does its own filename expansion in addition to your shell’s filename expansion. This command removes all files that have the .log extension in the log/ directory. Or, you can do something like this:
+
+    $ git rm \*~
+
+This command removes all files whose names end with a ~.
+
+#### Moving Files
+
+Unlike many other VCS systems, Git doesn’t explicitly track file movement. If you rename a file in Git, no metadata is stored in Git that tells it you renamed the file. However, Git is pretty smart about figuring that out after the fact — we’ll deal with detecting file movement a bit later. Thus it’s a bit confusing that Git has a mv command. If you want to rename a file in Git, you can run something like:
+
+    $ git mv README.md README 
+
+However, this is equivalent to running something like this:
+
+    $ mv README.md README
+    $ git rm README.md
+    $ git add README    
+
+#### Inspecting a Remote
+
+    $ git remote show origin
