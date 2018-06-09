@@ -1,27 +1,27 @@
-### ubuntu linux 桌面技巧
+## ubuntu linux 桌面技巧
 
-#### REF:
+### REF:
 
 1. [Things to do After Installing Ubuntu 18.04](https://itsfoss.com/things-to-do-after-installing-ubuntu-18-04/)
 1. [24 Must Have Essential Linux Applications](https://itsfoss.com/essential-linux-applications/)
 1. [Top 20 GNOME Extensions You Should Be Using Right Now](https://itsfoss.com/best-gnome-extensions/)
 
-#### 高分屏相关问题
+### 高分屏相关问题
 1. 高分屏需要通过system setting的display设定分辨率
 
-#### 如何在崩溃后重启桌面
+### 如何在崩溃后重启桌面
 
 > 要重启桌面，按下Alt + F2 将会打开一个命令菜单，输入r并按下回车。
 
-#### 桌面死机的处理
+### 桌面死机的处理
 
 > CTRL+ALT+F1[F2]似乎是两个图形终端,CTRL+ALT+F3~F6是字符终端,可以用TOP命令查找,KILL XORG进程即可.
 
-#### 图形处理软件GIMP安装失败报错相关依赖库无法安装
+### 图形处理软件GIMP安装失败报错相关依赖库无法安装
 
 > 在Software & updates 设定中开启Canonical相关的软件即可找到.
 
-#### Ubuntu中设定点击DOCK图标最小化应用.
+### Ubuntu中设定点击DOCK图标最小化应用.
 
 from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/](http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window-ubuntu-18-04/)
 
@@ -29,7 +29,7 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 >    * 以上可以使用`gsettings reset org.gnome.shell.extensions.dash-to-dock click-action`恢复.
 >    * 使用Dconf Editor软件.参考上面的值修改.
 
-#### How to disable animations in Ubuntu 17.10 or 18.04?
+### How to disable animations in Ubuntu 17.10 or 18.04?
 
 1. To disable animations,first install Gnome Tweak Tool:
 
@@ -39,7 +39,7 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 
 ![disable animations](imgs/disableanimation.png)
 
-#### 安装Sogou拼音再次卸载之后,软件更新报错
+### 安装Sogou拼音再次卸载之后,软件更新报错
 
 > 在用 sudo apt-get update 时出现这样的报错：
 
@@ -59,7 +59,7 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 
 >  `sudo apt-get update`
 
-#### [6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)
+### [6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)
 
 1. Install Preload: `sudo apt-get install preload`
 1. Control Startup apps: DOCK->search startup,可以看到启动应用.如果要看到所有的系统启动应用,可以运行`sudo sed -i "s/NoDisplay=true/NoDisplay=false/g" /etc/xdg/autostart/*.desktop`,然后重新查看启用应用就可以看到系统应用了.
@@ -68,7 +68,7 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 1. 编辑GRUB,加速系统启动.`sudo vi /etc/default/grub` Change the value of GRUB_TIMEOUT to 2,然后,`sudo update-grub2` 使改变生效.
 1. 参考上面一条关闭动画.
 
-####  Enable additional repositories for more software
+###  Enable additional repositories for more software
 
 Ubuntu has several repositories from where it provides software for your system. These repositories are:
 
@@ -80,17 +80,17 @@ Ubuntu has several repositories from where it provides software for your system.
 1. Enabling all these repositories will give you access to more software and proprietary drivers.
 
 
-#### 安装Gnome扩展
+### 安装Gnome扩展
 
 > `sudo apt install gnome-shell-extensions`
 > 在软件库中有很多扩展,包括天气,网络,系统等.
 
-#### 安装多媒体相关软件
+### 安装多媒体相关软件
 
 > `sudo apt install ubuntu-restricted-extras`
 
 
-#### 关于GDM问题(a stop job is running for session c1 of user root 1 min 30 s)
+### 关于GDM问题(a stop job is running for session c1 of user root 1 min 30 s)
 
 > `sudo vi /etc/systemd/system.conf`
 
@@ -98,7 +98,7 @@ Ubuntu has several repositories from where it provides software for your system.
 
 然后执行：systemctl daemon-reload
 
-#### 创建指向文件夹的快捷方式到dock
+### 创建指向文件夹的快捷方式到dock
 
 > 参考资料:
 1. [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html)
@@ -119,26 +119,26 @@ Ubuntu has several repositories from where it provides software for your system.
     Comment=devprojects
     Icon=gnome-panel-launcher
 
-#### 在文件管理器中,`Ctrl+D`快捷键可加入书签
+### 在文件管理器中,`Ctrl+D`快捷键可加入书签
 
-#### 在文件管理器中,点击右上角的 Newtab按钮可使用多个页签
+### 在文件管理器中,点击右上角的 Newtab按钮可使用多个页签
 
-#### 安装文件管理器扩展
+### 安装文件管理器扩展
 
 > `sudo apt-get install nautilus-image-converter`
 
 
-#### Ubuntu下的Chrome浏览器占用内存过多
+### Ubuntu下的Chrome浏览器占用内存过多
 
 > 关闭Setting里面的高级设定里面的GPU加速.
 
-#### Linux下按进程实时统计网络带宽利用率
+### Linux下按进程实时统计网络带宽利用率
 
 > 适用于Linux操作系统的开源网络监视工具.比如说,你可以用命令iftop来检查带宽使用情况. netstat用来查看接口统计报告,还有top监控系统当前运行进程.但是如果你想要找一个能够按进程实时统计网络带宽利用率,那么NetHogs就是你所需要的唯一工具.
 
 `sudo nethogs`
 
-#### User and group management related
+### User and group management related
 
 > In GUI, Ubuntu software ,search `gnome-system-tools` and install;
 
@@ -146,7 +146,7 @@ OR
 
 > `useradd` in command line.
 
-##### /etc/passwd and /etc/shadow
+#### /etc/passwd and /etc/shadow
 
 > `cat /etc/passwd`
 
@@ -183,16 +183,169 @@ The fields, in order from left to right, are:[1]
 1. Days since epoch when account expires
 Reserved    
 
-##### change file/dir ownner,group,and permissions
+#### change file/dir ownner,group,and permissions
 
     sudo chown postgres:adm postgresql-10-data.log 
     sudo chmod 640 postgresql-10-data.log
     sudo chown -R postgres:postgres data //where -R merns recursive
 
-##### `sodo cd dir` cann't work?
+#### `sudo cd dir` cann't work?
 
 Because cd is not a command. to issue:
 
     sudo -i -u postgres
     sudo -i //run as root
     su postgres //need login!!
+
+### Command replacement
+
+    $echo ddd \`date\` 
+
+will produce the output:
+
+    ddd Sun Jun 10 00:06:00 CST 2018
+
+### 包管理工具apt
+
+#### 参考文档： 
+
+* [APT工作原理](https://blog.csdn.net/buguyiqie/article/details/4948661 "APT工作原理")
+* [apt-get常用命令及工作原理](https://blog.csdn.net/mosquito_zm/article/details/63684608 "apt-get常用命令及工作原理")
+
+#### apt-get 常用实例
+
+*    apt-cache search packagename 搜索包
+*    apt-cache show packagename 获取包的相关信息，如说*    明、大小、版本等
+*    apt-get install packagename 安装包
+*    apt-get install packagename --reinstall 重新安*    装包
+*    apt-get -f install 修复安装”-f = –fix-missing”
+*    apt-get remove packagename 删除包
+*    apt-get remove packagename --purge 删除包，包括*    删除配置文件等
+*    apt-get update 更新源
+*    apt-get upgrade 更新已安装的包
+*    apt-get dist-upgrade 升级系统
+*    apt-get dselect-upgrade 使用 dselect 升级
+*    apt-cache depends packagename 了解使用依赖
+*    apt-cache rdepends packagename 是查看该包被哪些包*    依赖
+*    apt-get build-dep packagename 安装相关的编译环境
+*    apt-get source packagename 下载该包的源代码
+*    apt-get clean 清理无用的包
+*    apt-get autoclean 清理无用的包
+*    apt-get check 检查是否有损坏的依赖
+
+### 缩放图像的工具
+
+> `convert -scale 50%x50% installcppext.png installcppextsLittle.png`
+
+### 显示文件的前几行内容
+
+> The following example will show first 3 lines from /etc/passwd file:
+
+    `head -3 /etc/passwd`
+
+### linux之sed用法
+
+> 原始文档:[linux之sed用法](http://www.cnblogs.com/dong008259/archive/2011/12/07/2279897.html)
+
+sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法
+sed命令行格式为：
+
+        sed [-nefri] ‘command’ 输入文本        
+
+常用选项：
+
+        -n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。
+        -e∶直接在指令列模式上进行 sed 的动作编辑；
+        -f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；
+        -r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)
+        -i∶直接修改读取的档案内容，而不是由萤幕输出。       
+
+常用命令：
+
+        a   ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+        c   ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+        d   ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+        i   ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行；
+        p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+        s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法例如 1,20s/old/new/g 就是啦！
+
+举例：（假设我们有一文件名为ab）
+
+    删除某行
+
+     [root@localhost ruby] # sed '1d' ab              #删除第一行 
+     [root@localhost ruby] # sed '$d' ab              #删除最后一行
+     [root@localhost ruby] # sed '1,2d' ab           #删除第一行到第二行
+     [root@localhost ruby] # sed '2,$d' ab           #删除第二行到最后一行
+
+    显示某行
+
+     [root@localhost ruby] # sed -n '1p' ab           #显示第一行 
+     [root@localhost ruby] # sed -n '$p' ab           #显示最后一行
+     [root@localhost ruby] # sed -n '1,2p' ab        #显示第一行到第二行
+     [root@localhost ruby] # sed -n '2,$p' ab        #显示第二行到最后一行
+
+　　使用模式进行查询
+
+     [root@localhost ruby] # sed -n '/ruby/p' ab    #查询包括关键字ruby所在所有行
+     [root@localhost ruby] # sed -n '/\$/p' ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
+
+　　增加一行或多行字符串
+
+     [root@localhost ruby]# cat ab
+     Hello!
+     ruby is me,welcome to my blog.
+     end
+     [root@localhost ruby] # sed '1a drink tea' ab  #第一行后增加字符串"drink tea"
+     Hello!
+     drink tea
+     ruby is me,welcome to my blog. 
+     end
+     [root@localhost ruby] # sed '1,3a drink tea' ab #第一行到第三行后增加字符串"drink tea"
+     Hello!
+     drink tea
+     ruby is me,welcome to my blog.
+     drink tea
+     end
+     drink tea
+     [root@localhost ruby] # sed '1a drink tea\nor coffee' ab   #第一行后增加多行，使用换行符\n
+     Hello!
+     drink tea
+     or coffee
+     ruby is me,welcome to my blog.
+     end
+
+　　代替一行或多行
+
+     [root@localhost ruby] # sed '1c Hi' ab                #第一行代替为Hi
+     Hi
+     ruby is me,welcome to my blog.
+     end
+     [root@localhost ruby] # sed '1,2c Hi' ab             #第一行到第二行代替为Hi
+     Hi
+     end
+
+　　替换一行中的某部分
+
+　　格式：sed 's/要替换的字符串/新的字符串/g'   （要替换的字符串可以用正则表达式）
+     
+    [root@localhost ruby] # sed -n '/ruby/p' ab | sed 's/ruby/bird/g'    #替换ruby为bird
+    [root@localhost ruby] # sed -n '/ruby/p' ab | sed 's/ruby//g'        #删除ruby
+
+    插入
+
+    [root@localhost ruby] # sed -i '$a bye' ab         #在文件ab中最后行直接输入"bye"
+
+    [root@localhost ruby]# cat ab
+    Hello!
+    ruby is me,welcome to my blog.
+    end
+    bye
+
+    删除匹配行
+
+    sed -i '/匹配字符串/d'  filename  （注：若匹配字符串是变量，则需要“”，不是‘’。记得好像是）
+
+    替换匹配行中的某个字符串
+
+    sed -i '/匹配字符串/s/替换源字符串/替换目标字符串/g' filename
