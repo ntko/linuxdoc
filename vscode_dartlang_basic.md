@@ -746,4 +746,137 @@ All instance variables generate an implicit getter method. Non-final instance va
     
 If you initialize an instance variable where it is declared (instead of in a constructor or method), the value is set **when the instance is created, which is before the constructor and its initializer list execute**.
 
+#### Constructors Basic
 
+A function with the same name as its class (plus, optionally, an additional identifier as described in **`Named constructors`**). The most common form of constructor, the generative constructor, creates a new instance of a class. example:
+
+    class Point {
+      num x, y;
+
+      Point(num x, num y) {
+        // There's a better way to do this, stay tuned.
+        this.x = x;
+        this.y = y;
+      }
+    }
+
+The **`this`** keyword refers to the current instance.
+
+> Note: Use **`this`** only when there is a name conflict. Otherwise, Dart style omits the this.
+
+The pattern of assigning a constructor argument to an instance variable is so common, Dart has **`syntactic sugar`** to make it easy:
+
+class Point {
+  num x, y;
+
+  // Syntactic sugar for setting x and y
+  // before the constructor body runs.
+  Point(this.x, this.y);
+}
+
+#### Default constructors
+If you don’t declare a constructor, a default constructor is provided for you. The default constructor has no arguments and invokes the no-argument constructor in the superclass.
+
+> #### Constructors aren’t inherited
+> Subclasses don’t inherit constructors from their superclass. A subclass that declares no constructors has only the default (no argument, no name) constructor.
+
+#### Named constructors
+Use a named constructor to implement multiple constructors for a class or to provide extra clarity:
+
+    class Point {
+      num x, y;
+
+      Point(this.x, this.y);
+
+      // Named constructor
+      Point.origin() {
+        x = 0;
+        y = 0;
+      }
+    }
+
+> Remember that constructors are **`not inherited`**, which means that a superclass’s named constructor is not inherited by a subclass. If you want a subclass to be created with a named constructor defined in the superclass, **`you must implement that constructor in the subclass`**.
+
+#### Invoking a non-default superclass constructor
+By default, a constructor in a subclass calls the superclass’s unnamed, no-argument constructor. The superclass’s constructor is called at the beginning of the constructor body. If an initializer list is also being used, it executes before the superclass is called. In summary, the order of execution is as follows:
+
+1. initializer list
+1. superclass’s no-arg constructor
+1. main class’s no-arg constructor
+
+If the superclass doesn’t have an unnamed, no-argument constructor, then you **`must manually call one of the constructors in the superclass`**. Specify the superclass constructor after a colon (:), just before the constructor body (if any).
+
+    class Person {
+      String firstName;
+
+      Person.fromJson(Map data) {
+        print('in Person');
+      }
+    }
+
+    class Employee extends Person {
+      // Person does not have a default constructor;
+      // you must call super.fromJson(data).
+      Employee.fromJson(Map data) : super.fromJson(data) {
+        print('in Employee');
+      }
+    }
+
+#### Initializer list
+Besides invoking a superclass constructor, you can also initialize instance variables before the constructor body runs. `Separate initializers with commas`.
+
+    // Initializer list sets instance variables before
+    // the constructor body runs.
+    Point.fromJson(Map<String, num> json)
+        : x = json['x'],
+          y = json['y'] {
+      print('In Point.fromJson(): ($x, $y)');
+    }    
+
+> Warning: The right-hand side of an initializer does not have access to **`this`**.    
+
+> Initializer lists are handy when setting up final fields.For example:
+
+    import 'dart:math';
+
+    class Point {
+      final num x;
+      final num y;
+      final num distanceFromOrigin;
+
+      Point(x, y)
+          : x = x,
+            y = y,
+            distanceFromOrigin = sqrt(x * x + y * y);
+    }
+
+    main() {
+      var p = new Point(2, 3);
+      print(p.distanceFromOrigin);
+    }
+
+#### Redirecting constructors
+
+Sometimes a constructor’s only purpose is to redirect to another constructor in the same class. A redirecting constructor’s body is empty, with the constructor call appearing after a colon (:).
+
+    class Point {
+      num x, y;
+    
+      // The main constructor for this class.
+      Point(this.x, this.y);
+    
+      // Delegates to the main constructor.
+      Point.alongXAxis(num x) : this(x, 0);
+    }    
+
+#### Constant constructors
+If your class produces objects that never change, you can make these objects compile-time constants. To do this, define a const constructor and make sure that all instance variables are final.
+
+    class ImmutablePoint {
+      static final ImmutablePoint origin =
+          const ImmutablePoint(0, 0);
+    
+      final num x, y;
+    
+      const ImmutablePoint(this.x, this.y);
+    }    
