@@ -875,8 +875,45 @@ If your class produces objects that never change, you can make these objects com
     class ImmutablePoint {
       static final ImmutablePoint origin =
           const ImmutablePoint(0, 0);
-    
+
       final num x, y;
-    
+
       const ImmutablePoint(this.x, this.y);
     }    
+
+#### Factory constructors
+Use the factory keyword when implementing a constructor that doesn’t always create a new instance of its class. For example, a factory constructor might return an instance from a cache, or it might return an instance of a subtype.
+
+The following example demonstrates a factory constructor returning objects from a cache:
+
+class Logger {
+  final String name;
+  bool mute = false;
+
+  // _cache is library-private, thanks to
+  // the _ in front of its name.
+  static final Map<String, Logger> _cache =
+      <String, Logger>{};
+
+  factory Logger(String name) {
+    if (_cache.containsKey(name)) {
+      return _cache[name];
+    } else {
+      final logger = new Logger._internal(name);
+      _cache[name] = logger;
+      return logger;
+    }
+  }
+
+  Logger._internal(this.name);
+
+  void log(String msg) {
+    if (!mute) print(msg);
+  }
+}
+Note: Factory constructors have no access to this.
+
+To invoke a factory constructor, you use the new keyword:
+
+var logger = new Logger('UI');
+logger.log('Button clicked');    
