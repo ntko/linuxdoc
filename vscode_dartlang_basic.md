@@ -918,3 +918,185 @@ To invoke a factory constructor, you use the new keyword:
 
     var logger = new Logger('UI');
     logger.log('Button clicked');    
+
+#### Instance methods
+
+Instance methods on objects can access instance variables and this. The distanceTo() method in the following sample is an example of an instance method:
+
+    import 'dart:math';
+
+    class Point {
+      num x, y;
+
+      Point(this.x, this.y);
+
+      num distanceTo(Point other) {
+        var dx = x - other.x;
+        var dy = y - other.y;
+        return sqrt(dx * dx + dy * dy);
+      }
+    }
+#### Getters and setters
+
+Getters and setters are special methods that provide read and write access to an object’s properties. Recall that each instance variable has an implicit getter, plus a setter if appropriate. You can create additional properties by implementing getters and setters, using the **`get and set`** keywords:
+
+    class Rectangle {
+      num left, top, width, height;
+
+      Rectangle(this.left, this.top, this.width, this.height);
+
+      // Define two calculated properties: right and bottom.
+      num get right => left + width;
+      set right(num value) => left = value - width;
+      num get bottom => top + height;
+      set bottom(num value) => top = value - height;
+    }
+
+    void main() {
+      var rect = new Rectangle(3, 4, 20, 15);
+      assert(rect.left == 3);
+      rect.right = 12;
+      assert(rect.left == -8);
+    }
+
+> TIP: With getters and setters, you can start with instance variables, later wrapping them with methods, all without changing client code.
+
+> Note: Operators such as increment (++) work in the expected way, whether or not a getter is explicitly defined. To avoid any unexpected side effects, the operator calls the getter exactly once, saving its value in a temporary variable.
+
+> THINK: what if rect.right++ in the previous code?? TESTED: left is changed!
+
+#### Abstract classes and Abstract methods 
+
+**`Instance, getter, and setter methods can be abstract`**, defining an interface but leaving its implementation up to other classes. Abstract methods can **`only exist in abstract classes`**.
+
+To make a method abstract, use a semicolon (;) instead of a method body:
+
+    abstract class Doer {
+      // Define instance variables and methods...
+
+      void doSomething(); // Define an abstract method.
+    }
+
+    class EffectiveDoer extends Doer {
+      void doSomething() {
+        // Provide an implementation, so the method is not abstract here...
+      }
+    }
+
+Calling an abstract method results in a runtime error.
+
+#### Overridable operators
+
+Here’s an example of a class that overrides the + and - operators:
+
+    class Vector {
+      final int x, y;
+
+      const Vector(this.x, this.y);
+
+      /// Overrides + (a + b).
+      Vector operator +(Vector v) {
+        return new Vector(x + v.x, y + v.y);
+      }
+
+      /// Overrides - (a - b).
+      Vector operator -(Vector v) {
+        return new Vector(x - v.x, y - v.y);
+      }
+    }
+
+    void main() {
+      final v = new Vector(2, 3);
+      final w = new Vector(2, 2);
+
+      // v == (2, 3)
+      assert(v.x == 2 && v.y == 3);
+
+      // v + w == (4, 5)
+      assert((v + w).x == 4 && (v + w).y == 5);
+
+      // v - w == (0, 1)
+      assert((v - w).x == 0 && (v - w).y == 1);
+    }
+
+> If you override ==, you should also override Object’s `hashCode getter`. For an example of overriding == and hashCode, see `Implementing map keys` as followed.
+
+#### Implementing map keys
+
+Each object in Dart automatically provides an integer hash code, and thus can be used as a key in a map. However, you can override the hashCode getter to generate a custom hash code. If you do, you might also want to override the == operator. Objects that are equal (via ==) **`must have identical hash codes`**. A hash code doesn’t have to be unique, but it should be well distributed.
+
+    class Person {
+      final String firstName, lastName;
+
+      Person(this.firstName, this.lastName);
+
+      // Override hashCode using strategy from Effective Java,
+      // Chapter 11.
+      @override
+      int get hashCode {
+        int result = 17;
+        result = 37 * result + firstName.hashCode;
+        result = 37 * result + lastName.hashCode;
+        return result;
+      }
+
+      // You should generally implement operator == if you
+      // override hashCode.
+      @override
+      bool operator ==(dynamic other) {
+        if (other is! Person) return false;
+        Person person = other;
+        return (person.firstName == firstName &&
+            person.lastName == lastName);
+      }
+    }
+
+    void main() {
+      var p1 = new Person('Bob', 'Smith');
+      var p2 = new Person('Bob', 'Smith');
+      var p3 = 'not a person';
+      assert(p1.hashCode == p2.hashCode);
+      assert(p1 == p2);
+      assert(p1 != p3);
+    }
+
+
+For more information on overriding, in general, see `Extending a class`.
+
+#### Implicit interfaces
+
+Every class implicitly defines an interface containing all the instance members of the class and of any interfaces it implements. If you want to create a class A that supports class B’s API without inheriting B’s implementation, class A should implement the B interface.
+
+A class implements one or more interfaces by declaring them in an **`implements`** clause and then providing the APIs required by the interfaces. For example:
+
+    // A person. The implicit interface contains greet().
+    class Person {
+      // In the interface, but visible only in this library.
+      final _name;
+
+      // Not in the interface, since this is a constructor.
+      Person(this._name);
+
+      // In the interface.
+      String greet(String who) => 'Hello, $who. I am $_name.';
+    }
+
+    // An implementation of the Person interface.
+    class Impostor implements Person {
+      get _name => '';
+
+      String greet(String who) => 'Hi $who. Do you know who I am?';
+    }
+
+    String greetBob(Person person) => person.greet('Bob');
+
+    void main() {
+      print(greetBob(new Person('Kathy')));
+      print(greetBob(new Impostor()));
+    }
+
+Here’s an example of specifying that a class implements multiple interfaces:
+
+    class Point implements Comparable, Location {
+      // ···
+    }
