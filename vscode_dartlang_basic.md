@@ -1100,3 +1100,6 @@ Here’s an example of specifying that a class implements multiple interfaces:
     class Point implements Comparable, Location {
       // ···
     }
+
+#### Extending a class
+Use extends to create a subclass, and super to refer to the superclass.
