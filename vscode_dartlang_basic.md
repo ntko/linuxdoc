@@ -1102,4 +1102,417 @@ Here’s an example of specifying that a class implements multiple interfaces:
     }
 
 #### Extending a class
-Use extends to create a subclass, and super to refer to the superclass.
+
+Use **`extends`** to create a subclass, and super to refer to the superclass.
+
+Overriding members
+Subclasses can override instance methods, getters, and setters. You can use the **`@override`** annotation to indicate that you are intentionally overriding a member:
+
+    class SmartTelevision extends Television {
+      @override
+      void turnOn() {
+        // ···
+      }
+      // ···
+    }
+
+To narrow the type of a method parameter or instance variable in code that is type safe, you can use the **`covariant`** keyword.
+
+#### noSuchMethod()
+
+To detect or react whenever code attempts to use a non-existent method or instance variable, you can override noSuchMethod():
+
+    class A {
+      // Unless you override noSuchMethod, using a
+      // non-existent member results in a NoSuchMethodError.
+      @override
+      void noSuchMethod(Invocation invocation) {
+        print('You tried to use a non-existent member: ' +
+            '${invocation.memberName}');
+      }
+    }
+
+Here is another example:
+
+    class Foo {
+      num foo(x)=> 1.2;
+      }
+
+    class MockFoo implements Foo {
+      @override
+      noSuchMethod(Invocation i) {
+        if (i.memberName == #foo) {
+          if (i.isMethod &&
+              i.positionalArguments.length == 1 &&
+              i.namedArguments.isEmpty) {
+            // ... implement mock behavior for `foo` here.
+            print("\n MockFoo:noSuchMethod:${i.memberName} invoked with argu $   {i.positionalArguments[0]}\n");
+            return 1.5;
+          }
+          else{
+            return super.noSuchMethod(i);
+          }
+        }
+        else{
+          return super.noSuchMethod(i);
+        }
+      }
+    }
+
+You can’t invoke an unimplemented method unless one of the following is true:
+
+* The receiver has the static type dynamic.
+* The receiver has a static type that defines the unimplemented method (abstract is OK), and the dynamic type of the receiver has an implemention of noSuchMethod() that’s different from the one in class Object.
+
+#### Enumerated types
+
+Enumerated types, often called enumerations or enums, are a special kind of class used to represent a fixed number of constant values.
+
+##### Using enums
+Declare an enumerated type using the enum keyword:
+
+    enum Color { red, green, blue }
+
+Each value in an enum has an index getter, which returns the zero-based position of the value in the enum declaration. For example, the first value has index 0, and the second value has index 1.
+
+    assert(Color.red.index == 0);
+    assert(Color.green.index == 1);
+    assert(Color.blue.index == 2);
+
+To get a list of all of the values in the enum, use the enum’s values constant.
+
+    List<Color> colors = Color.values;
+    assert(colors[2] == Color.blue);
+
+You can use enums in switch statements, and you’ll get a warning if you don’t handle all of the enum’s values:
+
+    var aColor = Color.blue;
+
+    switch (aColor) {
+      case Color.red:
+        print('Red as roses!');
+        break;
+      case Color.green:
+        print('Green as grass!');
+        break;
+      default: // Without this, you see a WARNING.
+        print(aColor); // 'Color.blue'
+    }
+
+Enumerated types have the following limits:
+
+* You can’t subclass, mix in, or implement an enum.
+* You can’t explicitly instantiate an enum.
+
+#### Adding features to a class: mixins
+
+> NOTE: Minxins is not quite understandable, the example here is not good too. perhaps should read more source code of library.
+
+Mixins are a way of reusing a class’s code in multiple class hierarchies.
+
+To use a mixin, use the with keyword followed by one or more mixin names. The following example shows two classes that use mixins:
+
+    class Musician extends Performer with Musical {
+      // ···
+    }
+
+    class Maestro extends Person
+        with Musical, Aggressive, Demented {
+      Maestro(String maestroName) {
+        name = maestroName;
+        canConduct = true;
+      }
+    }
+
+To implement a mixin, create a class that extends Object, declares no constructors, and has no calls to super. For example:
+
+    abstract class Musical {
+      bool canPlayPiano = false;
+      bool canCompose = false;
+      bool canConduct = false;
+
+      void entertainMe() {
+        if (canPlayPiano) {
+          print('Playing piano');
+        } else if (canConduct) {
+          print('Waving hands');
+        } else {
+          print('Humming to self');
+        }
+      }
+    }
+
+#### Static variables and methods
+
+Use the **`static`** keyword to implement class-wide variables and methods.
+
+Static variables (class variables) are useful for class-wide state and constants:
+
+    class Queue {
+      static const int initialCapacity = 16;
+      // ···
+    }
+
+    void main() {
+      assert(Queue.initialCapacity == 16);
+    }
+
+> Static variables aren’t initialized until they’re used.
+
+Static methods (class methods) do not operate on an instance, and thus do not have access to this. For example:
+
+    import 'dart:math';
+
+    class Point {
+      num x, y;
+      Point(this.x, this.y);
+
+      static num distanceBetween(Point a, Point b) {
+        var dx = a.x - b.x;
+        var dy = a.y - b.y;
+        return sqrt(dx * dx + dy * dy);
+      }
+    }
+
+    void main() {
+      var a = new Point(2, 2);
+      var b = new Point(4, 4);
+      var distance = Point.distanceBetween(a, b);
+      assert(2.8 < distance && distance < 2.9);
+      print(distance);
+    }
+
+> Note: Consider using top-level functions, instead of static methods, for common or widely used utilities and functionality.
+
+You can use static methods as compile-time constants. For example, you can pass a static method as a parameter to a constant constructor.
+
+### Generics
+
+If you look at the API documentation for the basic array type, List, you’ll see that the type is actually List<E>. The <…> notation marks List as a generic (or parameterized) type—a type that has formal type parameters. By convention, type variables have single-letter names, such as **`E, T, S, K, and V`**.
+
+Example:
+
+    var names = new List<String>();
+    names.addAll(['Seth', 'Kathy', 'Lars']);
+    names.add(42); // Error
+    
+Generic types can save you the trouble of code duplication:
+
+    abstract class Cache<T> {
+      T getByKey(String key);
+      void setByKey(String key, T value);
+    }
+
+In this code, **`T`** is the stand-in type. It’s a placeholder that you can think of as a type that a developer will define later.
+
+#### Using collection literals
+
+List and map literals can be parameterized. Parameterized literals are just like the literals you’ve already seen, except that you add <type> (for lists) or <keyType, valueType> (for maps) before the opening bracket. Here is example of using typed literals:
+
+    var names = <String>['Seth', 'Kathy', 'Lars'];
+    var pages = <String, String>{
+      'index.html': 'Homepage',
+      'robots.txt': 'Hints for web robots',
+      'humans.txt': 'We are people, not machines'
+    };
+
+#### Using parameterized types with constructors
+
+To specify one or more types when using a constructor, put the types in angle brackets (<...>) just after the class name. For example:
+
+    var names = new List<String>();
+    names.addAll(['Seth', 'Kathy', 'Lars']);
+    var nameSet = new Set<String>.from(names);
+
+The following code creates a map that has integer keys and values of type View:
+
+    var views = new Map<int, View>();
+
+#### Generic collections and the types they contain
+
+Dart generic types are reified, which means that they carry their type information around at runtime. For example, you can test the type of a collection:
+
+    var names = new List<String>();
+    names.addAll(['Seth', 'Kathy', 'Lars']);
+    print(names is List<String>); // true
+
+> Note: In contrast, generics in Java use erasure, which means that generic type parameters are removed at runtime. In Java, you can test whether an object is a List, but you can’t test whether it’s a List<String>.
+
+#### Restricting the parameterized type
+
+When implementing a generic type, you might want to limit the types of its parameters. You can do this using extends.
+
+    class Foo<T extends SomeBaseClass> {
+      // Implementation goes here...
+      String toString() => "Instance of 'Foo<$T>'";
+    }
+
+    class Extender extends SomeBaseClass {...}
+
+It’s OK to use SomeBaseClass or any of its subclasses as generic argument:
+
+    var someBaseClassFoo = new Foo<SomeBaseClass>();
+    var extenderFoo = new Foo<Extender>();
+
+It’s also OK to specify no generic argument:
+
+    var foo = new Foo();
+    print(foo); // Instance of 'Foo<SomeBaseClass>'
+
+Specifying any non-SomeBaseClass type results in an error:
+
+    var foo = new Foo<Object>();
+
+#### Using generic methods
+
+Initially, Dart’s generic support was limited to classes. A newer syntax, called generic methods, allows type arguments on methods and functions:
+
+    T first<T>(List<T> ts) {
+      // Do some initial work or error checking, then...
+      T tmp = ts[0];
+      // Do some additional checking or processing...
+      return tmp;
+    }
+
+Here the generic type parameter on first (<T>) allows you to use the type argument T in several places:
+
+* In the function’s return type (T).
+* In the type of an argument (List<T>).
+* In the type of a local variable (T tmp).
+
+For more information about generics, see Using Generic Methods.
+
+### Libraries and visibility
+
+The import and library directives can help you create a modular and shareable code base. Libraries not only provide APIs, but are a unit of privacy: identifiers that start with an underscore (_) are visible only inside the library. **`Every Dart app is a library, even if it doesn’t use a library directive`**.
+
+Libraries can be distributed using packages. See Pub Package and Asset Manager for information about pub, a package manager included in the SDK.
+
+#### Using libraries
+Use import to specify how a namespace from one library is used in the scope of another library.
+
+![Dart library use](imgs/dartlibuse.png)
+
+For example, Dart web apps generally use the dart:html library, which they can import like this:
+
+    import 'dart:html';
+
+The only required argument to import is a URI specifying the library. For built-in libraries, the URI has the special dart: scheme. For other libraries, you can use a file system path or the package: scheme. The package: scheme specifies libraries provided by a package manager such as the pub tool. For example:
+
+    import 'package:test/test.dart';
+
+#### Specifying a library prefix
+If you import two libraries that have conflicting identifiers, then you can specify a prefix for one or both libraries. For example, if library1 and library2 both have an Element class, then you might have code like this:
+
+    import 'package:lib1/lib1.dart';
+    import 'package:lib2/lib2.dart' as lib2;
+
+    // Uses Element from lib1.
+    Element element1 = new Element();
+
+    // Uses Element from lib2.
+    lib2.Element element2 = new lib2.Element();
+
+#### Importing only part of a library
+If you want to use only part of a library, you can selectively import the library. For example:
+
+    // Import only foo.
+    import 'package:lib1/lib1.dart' show foo;
+
+    // Import all names EXCEPT foo.
+    import 'package:lib2/lib2.dart' hide foo;
+
+#### Lazily loading a library
+
+Deferred loading (also called lazy loading) allows an application to load a library on demand, if and when it’s needed. Here are some cases when you might use deferred loading:
+
+* To reduce an app’s initial startup time.
+* To perform A/B testing—trying out alternative implementations of an * algorithm, for example.
+* To load rarely used functionality, such as optional screens and dialogs.
+
+To lazily load a library, you must first import it using deferred as.
+
+    import 'package:greetings/hello.dart' deferred as hello;
+
+When you need the library, invoke loadLibrary() using the library’s identifier.
+
+    Future greet() async {
+      await hello.loadLibrary();
+      hello.printGreeting();
+    }
+
+In the preceding code, the await keyword pauses execution until the library is loaded. For more information about async and await, see asynchrony support.
+
+You can invoke loadLibrary() multiple times on a library without problems. The library is loaded only once.
+
+Keep in mind the following when you use deferred loading:
+
+1. A deferred library’s constants aren’t constants in the importing file. Remember, these constants don’t exist until the deferred library is loaded.
+You can’t use types from a deferred library in the importing file. Instead, consider moving interface types to a library imported by both the deferred library and the importing file.
+
+1. Dart implicitly inserts loadLibrary() into the namespace that you define using deferred as namespace. The loadLibrary() function returns a Future.
+
+#### Implementing libraries
+
+See Create Library Packages for advice on how to implement a library package, including:
+
+* How to organize library source code.
+* How to use the export directive.
+* When to use the part directive.
+
+### Handling Futures
+
+When you need the result of a completed Future, you have two options:
+
+* Use async and await.
+* Use the Future API, as described in the library tour.
+
+Code that uses async and await is asynchronous, **`To use await, code must be in an async function—a function marked as async`**:
+
+    Future checkVersion() async {
+      var version = await lookUpVersion();
+      // Do something with version
+    }
+
+> Note: Although an async function might perform time-consuming operations, it doesn’t wait for those operations. Instead, the async function executes only until it encounters its first await expression (details). Then it returns a Future object, resuming execution only after the await expression completes.
+
+Use try, catch, and finally to handle errors and cleanup in code that uses await:
+
+    try {
+      version = await lookUpVersion();
+    } catch (e) {
+      // React to inability to look up the version
+    }
+
+You can use await multiple times in an async function. For example, the following code waits three times for the results of functions:
+
+    var entrypoint = await findEntrypoint();
+    var exitCode = await runExecutable(entrypoint, args);
+    await flushThenExit(exitCode);
+
+In await expression, the value of expression is usually a Future; if it isn’t, then the value is automatically wrapped in a Future. This Future object indicates a promise to return an object. The value of await expression is that returned object. The await expression makes execution pause until that object is available.
+
+If you get a compile-time error when using await, make sure await is in an async function. For example, to use await in your app’s main() function, the body of main() must be marked as async:
+
+    Future main() async {
+      checkVersion();
+      print('In main: version is ${await lookUpVersion()}');
+    }
+
+#### Declaring async functions
+
+An async function is a function whose body is marked with the async modifier.
+
+Adding the async keyword to a function makes it return a Future. For example, consider this synchronous function, which returns a String:
+
+    String lookUpVersion() => '1.0.0';
+
+If you change it to be an async function—for example, because a future implementation will be time consuming—the returned value is a Future:
+
+    Future<String> lookUpVersion() async => '1.0.0';
+    
+Note that the function’s body doesn’t need to use the Future API. Dart creates the Future object if necessary.
+
+If your function doesn’t return a useful value, make its return type Future<void>.
+
+
