@@ -1515,4 +1515,168 @@ Note that the function’s body doesn’t need to use the Future API. Dart creat
 
 If your function doesn’t return a useful value, make its return type Future<void>.
 
+### Handling Streams
+
+When you need to get values from a Stream, you have two options:
+
+* Use async and an asynchronous for loop (`await for`).
+* Use the Stream API, as described in the library tour.
+
+> Note: Before using await for, be sure that it makes the code clearer and that you really do want to wait for all of the stream’s results. For example, you usually **`should not use await for for UI event listeners`**, because UI frameworks send endless streams of events.
+
+An asynchronous for loop has the following form:
+
+    await for (varOrType identifier in expression) {
+      // Executes each time the stream emits a value.
+    }
+
+The value of expression must have type Stream. Execution proceeds as follows:
+
+  1. Wait until the stream emits a value.
+  1. Execute the body of the for loop, with the variable set to that emitted value.
+  1. Repeat 1 and 2 until the stream is closed.
+
+To stop listening to the stream, you can use a `break` or `return` statement, which breaks out of the for loop and unsubscribes from the stream.
+
+If you get a compile-time error when implementing an asynchronous for loop, make sure the **`await for is in an async function`**. 
+
+For more information about asynchronous programming, in general, see the dart:async section of the library tour. Also see the articles Dart Language Asynchrony Support: Phase 1 and Dart Language Asynchrony Support: Phase 2, and the Dart language specification.
+
+### Generators
+
+When you need to lazily produce a sequence of values, consider using a generator function. Dart has built-in support for two kinds of generator functions:
+
+* Synchronous generator: Returns an Iterable object.
+* Asynchronous generator: Returns a Stream object.
+
+> why? if we implement generators ourself, it may be too chicky.
+
+#### Synchronous Generators
+
+To implement a **`synchronous`** generator function, mark the function body as `sync*`, and use `yield` statements to deliver values:
+
+    Iterable<int> naturalsTo(int n) sync* {
+      int k = 0;
+      while (k < n) yield k++;
+    }
+
+When called, naturalsTo immediately returns an iterable (much like a function marked async immediately returns a future), from which you can extract an iterator. The body of the function won’t start running until one calls `moveNext` on that iterator. It will run until it hits the yield statement the first time. The yield statement contains an expression, which it evaluates. Then, the function suspends, and `moveNext` returns true to its caller.
+
+The function will resume execution the next time `moveNext` is called. When the loop ends, the method implicitly executes a return, which causes it to terminate. At that point, `moveNext` returns false to its caller.
+
+#### Asynchronous Generators
+
+To asynchronously produce a sequence, we use streams. To implement an **`asynchronous`** generator function, mark the function body as `async*`, and use `yield` statements to deliver values:
+
+    Stream<int> asynchronousNaturalsTo(int n) async* {
+      int k = 0;
+      while (k < n) yield k++;
+    }
+
+and the `await-for loop` is designed to play well with streams:
+
+    var asycStream = asynchronousNaturalsTo(5);
+    await for (int i in asycStream) { 
+      print('event loop $i'); 
+    }
+
+Every time an element is added to the stream, the loop body is run. After each iteration, the function enclosing the loop suspends until the next element is available or the stream is done. 
+
+>NOTE: Just like await expressions, await-for loops can only appear inside asynchronous functions.    
+
+#### Generators use recursive code
+
+If your generator is recursive, you can improve its performance by using `yield*`:
+
+    Iterable<int> naturalsDownFrom(int n) sync* {
+      if (n > 0) {
+        yield n;
+        yield* naturalsDownFrom(n - 1);
+      }
+    }
+
+For more information about generators, see the article Dart Language Asynchrony Support: Phase 2.
+
+### Callable classes
+
+To allow your Dart class to be called like a function, implement the `call()` method.
+
+In the following example, the WannabeFunction class defines a call() function that takes three strings and concatenates them, separating each with a space, and appending an exclamation. Click the run button ( red-run.png ) to execute the code.
+
+    class WannabeFunction {
+      call(String a, String b, String c) => '$a $b $c!';
+    }
+    
+    main() {
+      var wf = new WannabeFunction();
+      var out = wf("Hi","there,","gang");
+      print('$out');
+    }
+
+#### The call() method
+In the following example, we have an ordinary class WannabeFunction that happens to define a method named call().
+
+    class WannabeFunction {
+      call(int a, int b) => a + b;
+    }
+
+The call() method is special, in that anyone who defines a call() method is presumed to dynamically emulate a function. This allows us to use instances of WannabeFunction as if they were functions that take two integer arguments:
+
+    var wf = new WannabeFunction();
+    wf(3, 4); // 7
+
+There are cases where this ability can be quite useful. It is also core to the design philosophy of the Dart language:
+
+* What matters about an object is its behavior. If object a has a procedural interface that is compatible with that of another object b, a may substitute for b.
+* The interface of any kind of object can always be emulated by another suitably defined object.
+
+#### How does it work?
+
+When x(a1, .., an) is evaluated, if it is a normal function, it gets called in the normal way. If it isn’t we just invoke call() on it. If x supports a call() method with suitable arguments it gets called.
+
+Otherwise, noSuchMethod() gets invoked. The default implementation of noSuchMethod() checks to see whether it was invoked due to an attempt to use call(), and if so issues a helpful error message suggesting you might have wanted to use a closure.
+
+#### The apply() method
+
+The class Function defines the static method apply() with the following signature:
+
+    static apply(Function function,
+                      List positionalArguments,
+                      [Map<Symbol, dynamic> namedArguments]);
+                      
+The apply() function allows functions to be called in generic fashion. The last argument is positional, and is only needed if the function we mean to call takes named arguments. These are provided via map from argument names to their values. One thing to pay attention to is that names are described via instances of class **`Symbol`**.
+
+#### Symbols
+
+You can create symbols from strings:
+
+    new Symbol('myFavoriteMethodName');
+
+If possible, create constant symbol objects:
+
+    const Symbol('myFavoriteMethodName');
+
+Using constant symbols helps dart2js minify your code.
+
+#### Function types
+
+An additional issue is how user-defined function classes relate to the type system. To simulate functions properly, we want them to be members of the appropriate function type:
+
+typedef BinaryFunction(a,b);
+...
+new WannabeFunction() is BinaryFunction; // true
+
+Therefore, we decree that an object is a member of a function type if the object’s class has a call() method and that method is a member of the function type.
+
+### Isolates
+
+Most computers, even on mobile platforms, have multi-core CPUs. To take advantage of all those cores, developers traditionally use shared-memory threads running concurrently. However, shared-state concurrency is error prone and can lead to complicated code.
+
+Instead of threads, all Dart code runs inside of isolates. Each isolate has its own memory heap, ensuring that no isolate’s state is accessible from any other isolate.
+
+For more information, see the dart:isolate library documentation.
+
+
+
+
 
