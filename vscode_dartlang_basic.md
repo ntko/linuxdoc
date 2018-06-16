@@ -84,6 +84,11 @@
         - [Function types](#function-types)
     - [Isolates](#isolates)
     - [Typedefs](#typedefs)
+    - [Metadata](#metadata)
+    - [Comments](#comments)
+        - [Single-line comments](#single-line-comments)
+        - [Multi-line comments](#multi-line-comments)
+        - [Documentation comments](#documentation-comments)
 
 <!-- /TOC -->
 
@@ -1824,6 +1829,105 @@ Because typedefs are simply aliases, they offer a way to check the type of any f
     void main() {
       assert(sort is Compare<int>); // True!
     }
+
+### Metadata
+
+Use metadata to give additional information about your code. A metadata annotation begins with the character @, followed by either a reference to a compile-time constant (such as deprecated) or a call to a constant constructor.
+
+Two annotations are available to all Dart code: @deprecated and @override. For examples of using @override, see Extending a class. Here’s an example of using the @deprecated annotation:
+
+    class Television {
+      /// _Deprecated: Use [turnOn] instead._
+      @deprecated
+      void activate() {
+        turnOn();
+      }
+
+      /// Turns the TV's power on.
+      void turnOn() {...}
+    }
+    
+You can define your own metadata annotations. Here’s an example of defining a @todo annotation that takes two arguments:
+
+    library todo;
+
+    class Todo {
+      final String who;
+      final String what;
+
+      const Todo(this.who, this.what);
+    }
+    
+And here’s an example of using that @todo annotation:
+
+    import 'todo.dart';
+
+    @Todo('seth', 'make this do something')
+    void doSomething() {
+      print('do something');
+    }
+    
+Metadata can appear before a library, class, typedef, type parameter, constructor, factory, function, field, parameter, or variable declaration and before an import or export directive. You can retrieve metadata at runtime using reflection.
+
+### Comments
+
+Dart supports single-line comments, multi-line comments, and documentation comments.
+
+#### Single-line comments
+
+A single-line comment begins with `//`. Everything between `//` and the end of line is ignored by the Dart compiler
+
+    void main() {
+      // TODO: refactor into an AbstractLlamaGreetingFactory?
+      print('Welcome to my Llama farm!');
+    }
+
+#### Multi-line comments
+
+A multi-line comment begins with `/*` and ends with `*/`. Everything between /* and */ is ignored by the Dart compiler (unless the comment is a documentation comment; see the next section). Multi-line comments can nest.
+
+    void main() {
+      /*
+       * This is a lot of work. Consider raising chickens.
+
+      Llama larry = new Llama();
+      larry.feed();
+      larry.exercise();
+      larry.clean();
+       */
+    }
+#### Documentation comments
+
+Documentation comments are multi-line or single-line comments that begin with `///` or `/**`. Using `///` on consecutive lines has the same effect as a multi-line doc comment.
+
+Inside a documentation comment, the Dart compiler ignores all text unless it is enclosed in brackets. **`Using brackets, you can refer to classes, methods, fields, top-level variables, functions, and parameters`**. The names in brackets are resolved in the lexical scope of the documented program element.
+
+Here is an example of documentation comments with references to other classes and arguments:
+
+    /// A domesticated South American camelid (Lama glama).
+    ///
+    /// Andean cultures have used llamas as meat and pack
+    /// animals since pre-Hispanic times.
+    class Llama {
+      String name;
+
+      /// Feeds your llama [Food].
+      ///
+      /// The typical llama eats one bale of hay per week.
+      void feed(Food food) {
+        // ...
+      }
+
+      /// Exercises your llama with an [activity] for
+      /// [timeLimit] minutes.
+      void exercise(Activity activity, int timeLimit) {
+        // ...
+      }
+    }
+    
+In the generated documentation, `[Food]` becomes a link to the API docs for the Food class.
+
+To parse Dart code and generate HTML documentation, you can use the SDK’s documentation generation tool. For an example of generated documentation, see the Dart API documentation. For advice on how to structure your comments, see Guidelines for Dart Doc Comments.
 
 
 
