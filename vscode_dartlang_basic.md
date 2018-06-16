@@ -1,3 +1,92 @@
+<!-- TOC -->
+
+- [Linux下使用vscode开发Dart环境配置相关问题](#linux下使用vscode开发dart环境配置相关问题)
+    - [Install Dart VM SDK:](#install-dart-vm-sdk)
+    - [Install Dart vscode plugin](#install-dart-vscode-plugin)
+    - [Install Markdown-TOC plugin for markdown file](#install-markdown-toc-plugin-for-markdown-file)
+    - [Howto Use startup lib stagehand](#howto-use-startup-lib-stagehand)
+    - [DartLang Basic](#dartlang-basic)
+    - [Final and const](#final-and-const)
+    - [Numbers](#numbers)
+        - [int](#int)
+        - [double](#double)
+    - [Strings](#strings)
+    - [Lists](#lists)
+    - [Maps](#maps)
+    - [Runes](#runes)
+    - [How do I reverse a String in Dart?](#how-do-i-reverse-a-string-in-dart)
+    - [Symbols](#symbols)
+    - [Functions](#functions)
+        - [The main() function](#the-main-function)
+        - [Functions Basic](#functions-basic)
+        - [Optional parameters](#optional-parameters)
+            - [Optional named parameters](#optional-named-parameters)
+            - [Optional positional parameters](#optional-positional-parameters)
+        - [Functions as first-class objects](#functions-as-first-class-objects)
+        - [Anonymous functions](#anonymous-functions)
+        - [Lexical closures](#lexical-closures)
+        - [Testing functions for equality](#testing-functions-for-equality)
+    - [Operators](#operators)
+    - [Conditional expressions](#conditional-expressions)
+    - [Cascade notation (..)](#cascade-notation-)
+    - [Control flow statements](#control-flow-statements)
+        - [Switch and case](#switch-and-case)
+    - [Exceptions](#exceptions)
+        - [Throw](#throw)
+        - [Catch](#catch)
+        - [Finally](#finally)
+    - [Classes](#classes)
+        - [Instance variables](#instance-variables)
+        - [Constructors Basic](#constructors-basic)
+        - [Default constructors](#default-constructors)
+        - [Named constructors](#named-constructors)
+        - [Invoking a non-default superclass constructor](#invoking-a-non-default-superclass-constructor)
+        - [Initializer list](#initializer-list)
+        - [Redirecting constructors](#redirecting-constructors)
+        - [Constant constructors](#constant-constructors)
+        - [Factory constructors](#factory-constructors)
+        - [Instance methods](#instance-methods)
+        - [Getters and setters](#getters-and-setters)
+        - [Abstract classes and Abstract methods](#abstract-classes-and-abstract-methods)
+        - [Overridable operators](#overridable-operators)
+        - [Implementing map keys](#implementing-map-keys)
+        - [Implicit interfaces](#implicit-interfaces)
+        - [Extending a class](#extending-a-class)
+        - [noSuchMethod()](#nosuchmethod)
+        - [Enumerated types](#enumerated-types)
+            - [Using enums](#using-enums)
+        - [Adding features to a class: mixins](#adding-features-to-a-class-mixins)
+        - [Static variables and methods](#static-variables-and-methods)
+    - [Generics](#generics)
+        - [Using collection literals](#using-collection-literals)
+        - [Using parameterized types with constructors](#using-parameterized-types-with-constructors)
+        - [Generic collections and the types they contain](#generic-collections-and-the-types-they-contain)
+        - [Restricting the parameterized type](#restricting-the-parameterized-type)
+        - [Using generic methods](#using-generic-methods)
+    - [Libraries and visibility](#libraries-and-visibility)
+        - [Using libraries](#using-libraries)
+        - [Specifying a library prefix](#specifying-a-library-prefix)
+        - [Importing only part of a library](#importing-only-part-of-a-library)
+        - [Lazily loading a library](#lazily-loading-a-library)
+        - [Implementing libraries](#implementing-libraries)
+    - [Handling Futures](#handling-futures)
+        - [Declaring async functions](#declaring-async-functions)
+    - [Handling Streams](#handling-streams)
+    - [Generators](#generators)
+        - [Synchronous Generators](#synchronous-generators)
+        - [Asynchronous Generators](#asynchronous-generators)
+        - [Generators use recursive code](#generators-use-recursive-code)
+    - [Callable classes](#callable-classes)
+        - [The call() method](#the-call-method)
+        - [How does it work?](#how-does-it-work)
+        - [The apply() method](#the-apply-method)
+        - [Symbols](#symbols-1)
+        - [Function types](#function-types)
+    - [Isolates](#isolates)
+    - [Typedefs](#typedefs)
+
+<!-- /TOC -->
+
 ## Linux下使用vscode开发Dart环境配置相关问题
 
 ### Install Dart VM SDK:
@@ -11,6 +100,10 @@
 * Type ‘install’, and select the ‘Extensions: Install Extension’ action
 * Enter flutter in the search field, select ‘Dart’ in the list, and click Install
 * Select ‘OK’ to reload VS Code
+
+### Install Markdown-TOC plugin for markdown file
+
+* alanwalk.markdown-toc
 
 ### Howto Use startup lib stagehand
 
@@ -1676,6 +1769,61 @@ Instead of threads, all Dart code runs inside of isolates. Each isolate has its 
 
 For more information, see the dart:isolate library documentation.
 
+### Typedefs
+
+In Dart, functions are objects, just like strings and numbers are objects. A typedef, or function-type alias, gives a function type a name that you can use when declaring fields and return types. A typedef retains type information when a function type is assigned to a variable.
+
+Consider the following code, which doesn’t use a typedef:
+
+    class SortedCollection {
+      Function compare;
+
+      SortedCollection(int f(Object a, Object b)) {
+        compare = f;
+      }
+    }
+
+    // Initial, broken implementation.
+    int sort(Object a, Object b) => 0;
+
+    void main() {
+      SortedCollection coll = new SortedCollection(sort);
+
+      // All we know is that compare is a function,
+      // but what type of function?
+      assert(coll.compare is Function);
+    }
+
+Type information is lost when assigning f to compare. The type of f is (Object, Object) → int (where → means returns), yet the type of compare is Function. If we change the code to use explicit names and retain type information, both developers and tools can use that information.
+
+    typedef Compare = int Function(Object a, Object b);
+
+    class SortedCollection {
+      Compare compare;
+
+      SortedCollection(this.compare);
+    }
+
+    // Initial, broken implementation.
+    int sort(Object a, Object b) => 0;
+
+    void main() {
+      SortedCollection coll = new SortedCollection(sort);
+      assert(coll.compare is Function);
+      assert(coll.compare is Compare);
+    }
+
+>Note: Currently, typedefs are restricted to function types. We expect this to change.
+
+Because typedefs are simply aliases, they offer a way to check the type of any function. For example:
+
+    typedef Compare<T> = int Function(T a, T b);
+
+    int sort(int a, int b) => a - b;
+
+    void main() {
+      assert(sort is Compare<int>); // True!
+    }
 
 
 
