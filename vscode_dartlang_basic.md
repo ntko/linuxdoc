@@ -217,7 +217,14 @@ Use the toString() method to convert an int or double to a string. To specify th
 
 ### Strings
 
-A Dart string is a sequence of UTF-16 code units. You can use either single or double quotes to create a string:
+A Dart string is a sequence of UTF-16 code units. You can use either single or double quotes to create a string.
+    var stringA = 'It\'s a good film.';
+    var stringB = "It's a good film.";
+    var stringC = 'It\'s a' + " good film.";
+    var stringD = '''Test special string 
+                    literals with line-return
+                    ''';
+    var stringE = r'This is\n a raw string...';
 
 ### Lists
 Perhaps the most common collection in nearly every programming language is the array, or ordered group of objects. In Dart, arrays are List objects, so most people just call them lists.
