@@ -58,7 +58,7 @@ You can also extract a substring or split a string into a list of substrings:
     // a list of all characters (as Strings); good for
     // iterating.
     for (var char in 'hello'.split('')) {
-    print(char);
+        print(char);
     }
 
     // Get all the UTF-16 code units in the string.
@@ -147,7 +147,7 @@ You can work directly with the RegExp class, too. The Match class provides acces
 
     // Loop through all matches.
     for (var match in numbers.allMatches(someDigits)) {
-    print(match.group(0)); // 15, then 20
+        print(match.group(0)); // 15, then 20
     }
 
 ### More information
