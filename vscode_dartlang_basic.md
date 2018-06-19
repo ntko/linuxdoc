@@ -10,6 +10,7 @@
     - [Numbers](#numbers)
         - [int](#int)
         - [double](#double)
+        - [Number<->String convert](#number-string-convert)
     - [Strings](#strings)
     - [Lists](#lists)
     - [Maps](#maps)
@@ -171,6 +172,8 @@ If a number includes a decimal, it is a double. Here are some examples of defini
     double y = 1.1;
     double exponents = 1.42e5;
 
+#### Number<->String convert
+
 Here’s how you turn a string into a number, or vice versa:
 
     // String -> int
@@ -188,6 +191,29 @@ Here’s how you turn a string into a number, or vice versa:
     // double -> String
     String piAsString = 3.14159.toStringAsFixed(2);
     assert(piAsString == '3.14');
+
+    assert(num.parse('42') is int);
+    assert(num.parse('0x42') is int);
+    assert(num.parse('0.50') is double);
+    
+To specify the base of an integer, add a radix parameter:
+
+    assert(int.parse('42', radix: 16) == 66);    
+
+Use the toString() method to convert an int or double to a string. To specify the number of digits to the right of the decimal, use toStringAsFixed(). To specify the number of significant digits in the string, use toStringAsPrecision():
+
+    // Convert an int to a string.
+    assert(42.toString() == '42');
+
+    // Convert a double to a string.
+    assert(123.456.toString() == '123.456');
+
+    // Specify the number of digits after the decimal.
+    assert(123.456.toStringAsFixed(2) == '123.46');
+
+    // Specify the number of significant figures.
+    assert(123.456.toStringAsPrecision(2) == '1.2e+2');
+    assert(double.parse('1.2e+2') == 120.0);    
 
 ### Strings
 
