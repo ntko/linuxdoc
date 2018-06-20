@@ -1,3 +1,41 @@
+<!-- TOC -->
+
+- [ubuntu linux 桌面技巧](#ubuntu-linux-桌面技巧)
+    - [REF:](#ref)
+    - [高分屏相关问题](#高分屏相关问题)
+    - [How To Get Ubuntu To Boot Before Windows](#how-to-get-ubuntu-to-boot-before-windows)
+        - [Use efibootmgr To Change The Boot Order Within Ubuntu:](#use-efibootmgr-to-change-the-boot-order-within-ubuntu)
+    - [如何在崩溃后重启桌面](#如何在崩溃后重启桌面)
+    - [桌面死机的处理](#桌面死机的处理)
+    - [图形处理软件GIMP安装失败报错相关依赖库无法安装](#图形处理软件gimp安装失败报错相关依赖库无法安装)
+    - [Ubuntu中设定点击DOCK图标最小化应用.](#ubuntu中设定点击dock图标最小化应用)
+    - [How to disable animations in Ubuntu 17.10 or 18.04?](#how-to-disable-animations-in-ubuntu-1710-or-1804)
+    - [安装Sogou拼音再次卸载之后,软件更新报错](#安装sogou拼音再次卸载之后软件更新报错)
+    - [[6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)](#6-ways-to-speed-up-your-ubuntu-pchttpswwwhowtogeekcom1157976-ways-to-speed-up-ubuntu)
+    - [Enable additional repositories for more software](#enable-additional-repositories-for-more-software)
+    - [安装Gnome扩展](#安装gnome扩展)
+    - [安装多媒体相关软件](#安装多媒体相关软件)
+    - [关于GDM问题(a stop job is running for session c1 of user root 1 min 30 s)](#关于gdm问题a-stop-job-is-running-for-session-c1-of-user-root-1-min-30-s)
+    - [创建指向文件夹的快捷方式到dock](#创建指向文件夹的快捷方式到dock)
+    - [在文件管理器中,`Ctrl+D`快捷键可加入书签](#在文件管理器中ctrld快捷键可加入书签)
+    - [在文件管理器中,点击右上角的 Newtab按钮可使用多个页签](#在文件管理器中点击右上角的-newtab按钮可使用多个页签)
+    - [安装文件管理器扩展](#安装文件管理器扩展)
+    - [Ubuntu下的Chrome浏览器占用内存过多](#ubuntu下的chrome浏览器占用内存过多)
+    - [Linux下按进程实时统计网络带宽利用率](#linux下按进程实时统计网络带宽利用率)
+    - [User and group management related](#user-and-group-management-related)
+        - [/etc/passwd and /etc/shadow](#etcpasswd-and-etcshadow)
+        - [change file/dir ownner,group,and permissions](#change-filedir-ownnergroupand-permissions)
+        - [`sudo cd dir` cann't work?](#sudo-cd-dir-cannt-work)
+    - [Command replacement](#command-replacement)
+    - [包管理工具apt](#包管理工具apt)
+        - [参考文档：](#参考文档)
+        - [apt-get 常用实例](#apt-get-常用实例)
+    - [缩放图像的工具](#缩放图像的工具)
+    - [显示文件的前几行内容](#显示文件的前几行内容)
+    - [linux之sed用法](#linux之sed用法)
+
+<!-- /TOC -->
+
 ## ubuntu linux 桌面技巧
 
 ### REF:
@@ -8,6 +46,42 @@
 
 ### 高分屏相关问题
 1. 高分屏需要通过system setting的display设定分辨率
+
+### How To Get Ubuntu To Boot Before Windows
+
+After windows10 upgrade, the grub boot menu will NOT be the first boot efi, but the ubuntu installation is still there, althought we cann't boot ubuntu. Here is the solution:
+
+#### Use efibootmgr To Change The Boot Order Within Ubuntu:
+
+from: [https://www.lifewire.com/fix-uefi-bootloader-issues-when-dual-booting-2200655](https://www.lifewire.com/fix-uefi-bootloader-issues-when-dual-booting-2200655)
+
+![efibootmgr](imgs/efibootmgr.png)
+
+Simply follow these steps:
+
+1. Insert your live Ubuntu USB drive into the computer Open a terminal window and type the following command:
+
+2. (optional)sudo apt-get-install efibootmgr 
+Enter your password and press Y when asked whether you want to continue.
+A list will appear with the following information:
+3. run command in terminal: `sudo efibootmgr`
+
+        BootCurrent: 0001
+        Timeout: 0
+        Bootorder: 0001, 0002, 0003
+        Boot 0001 Windows
+        Boot 0002 Ubuntu
+        Boot 0003 EFI USB Drive
+
+This list is only indicative of what you might see.The BootCurrent shows the item that is currently booting and so you will notice that the BootCurrent in the list above matches against Windows.
+
+4. You can change the boot order using the following command:
+
+    `sudo efibootmgr -o 0002,0001,0003`
+
+This will change the boot order so that Ubuntu is first and then Windows and then the USB drive. 
+Exit the terminal window and reboot your computer(Remember to remove your USB drive) 
+A menu should now appear with the option to boot Ubuntu or Windows.
 
 ### 如何在崩溃后重启桌面
 

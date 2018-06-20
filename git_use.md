@@ -1,5 +1,24 @@
-### git使用问题
-#### git config 以及 --glocal 和 --system 有什么不同
+<!-- TOC -->
+
+- [git使用问题](#git使用问题)
+    - [git config 以及 --glocal 和 --system 有什么不同](#git-config-以及---glocal-和---system-有什么不同)
+    - [配置git](#配置git)
+    - [初始化git repository](#初始化git-repository)
+    - [Caching your GitHub password in Git](#caching-your-github-password-in-git)
+    - [Using credential helpers to cache passwords](#using-credential-helpers-to-cache-passwords)
+    - [create a new repository on the command line](#create-a-new-repository-on-the-command-line)
+    - [push an existing repository from the command line](#push-an-existing-repository-from-the-command-line)
+    - [Meaning of the GitHub message: push declined due to email privacy restrictions](#meaning-of-the-github-message-push-declined-due-to-email-privacy-restrictions)
+    - [.gitignore FILE](#gitignore-file)
+    - [Delete File](#delete-file)
+    - [Moving Files](#moving-files)
+    - [Inspecting a Remote](#inspecting-a-remote)
+
+<!-- /TOC -->
+
+## git使用问题
+
+### git config 以及 --glocal 和 --system 有什么不同
 [git config 以及 --glocal 和 --system](https://www.daixiaorui.com/read/240.html "git config 以及 --glocal 和 --system的区别")    
 1. `git config` config the file in the Git directory. (that is, .git/config) file.
 1. `git config --glocal` config global config specified to you. (~/.gitconfig or ~/.config/git/config) file.
@@ -7,7 +26,7 @@
 
     Mostly, we use `git config --global`
     
-#### 配置git
+### 配置git
 
     $ git config --global user.name "Last First"
     $ git config --global user.email fakeuser@msn.com
@@ -18,13 +37,13 @@
 
 > 使用`git config --list`可以查看当前配置。
 
-#### 初始化git repository
+### 初始化git repository
 
 > 使用 `$ git init` 可以将当前目录初始化为git repository
 
 > 使用 `$ git clone https://github.com/libgit2/libgit2` 从远程仓库初始化.
 
-#### Caching your GitHub password in Git
+### Caching your GitHub password in Git
 
 > 1. In Terminal, enter the following:
 
@@ -36,7 +55,7 @@
     $ git config --global credential.helper 'cache --timeout=3600'
     # Set the cache to timeout after 1 hour (setting is in seconds)
 
-#### Using credential helpers to cache passwords
+### Using credential helpers to cache passwords
 
 > [REF:https://git.seveas.net/using-credential-helpers-to-cache-passwords.html](https://git.seveas.net/using-credential-helpers-to-cache-passwords.html)
 
@@ -53,7 +72,7 @@ The store and netrc helpers use unencrypted plain-text files for storing credent
 
 The wincred, osxkeychain and gnome-keyring credential helpers integrate with the secure credential storage provided by Windows, OSX and Gnome. These are the preferred credential helpers as they never store passwords unencrypted.
 
-#### create a new repository on the command line
+### create a new repository on the command line
 
     echo "# vscodeFirst" >> README.md
     git init
@@ -62,13 +81,13 @@ The wincred, osxkeychain and gnome-keyring credential helpers integrate with the
     git remote add origin https://github.com/ntko/vscodeFirst.git
     git push -u origin master
 
-####  push an existing repository from the command line
+###  push an existing repository from the command line
 
     git remote add origin https://github.com/ntko/vscodeFirst.git
     git push -u origin master
 
 
-#### Meaning of the GitHub message: push declined due to email privacy restrictions
+### Meaning of the GitHub message: push declined due to email privacy restrictions
 
 ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/questions/43378060/meaning-of-the-github-message-push-declined-due-to-email-privacy-restrictions)
 
@@ -96,7 +115,7 @@ ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/quest
 
      `git push`
 
-#### .gitignore FILE
+### .gitignore FILE
 
 > [A collection of useful .gitignore templates](https://github.com/github/gitignore)
 
@@ -125,7 +144,7 @@ ORIGIN: [This information is from stackoberflow](https://stackoverflow.com/quest
     # ignore all .pdf files in the doc/ directory and any of its subdirectories
     doc/**/*.pdf
 
-#### Delete File
+### Delete File
 
 To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The git rm command does that, and also removes the file from your working directory so you don’t see it as an untracked file the next time around.
 
@@ -152,7 +171,7 @@ Note the backslash (\) in front of the *. This is necessary because Git does its
 
 This command removes all files whose names end with a ~.
 
-#### Moving Files
+### Moving Files
 
 Unlike many other VCS systems, Git doesn’t explicitly track file movement. If you rename a file in Git, no metadata is stored in Git that tells it you renamed the file. However, Git is pretty smart about figuring that out after the fact — we’ll deal with detecting file movement a bit later. Thus it’s a bit confusing that Git has a mv command. If you want to rename a file in Git, you can run something like:
 
@@ -164,6 +183,6 @@ However, this is equivalent to running something like this:
     $ git rm README.md
     $ git add README    
 
-#### Inspecting a Remote
+### Inspecting a Remote
 
     $ git remote show origin
