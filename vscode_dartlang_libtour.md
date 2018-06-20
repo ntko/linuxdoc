@@ -242,7 +242,8 @@ A set in Dart is an unordered collection of unique items. Because a set is unord
     // Remove an item from a set.
     ingredients.remove('gold');
     assert(ingredients.length == 2);
-    Use contains() and containsAll() to check whether one or more objects are in a set:
+
+Use contains() and containsAll() to check whether one or more objects are in a set:
 
     var ingredients = new Set();
     ingredients.addAll(['gold', 'titanium', 'xenon']);
