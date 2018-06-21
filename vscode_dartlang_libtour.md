@@ -243,7 +243,7 @@ A set in Dart is an unordered collection of unique items. Because a set is unord
     ingredients.remove('gold');
     assert(ingredients.length == 2);
 
-Use contains() and containsAll() to check whether one or more objects are in a set:
+Use `contains()` and `containsAll()` to check whether one or more objects are in a set:
 
     var ingredients = new Set();
     ingredients.addAll(['gold', 'titanium', 'xenon']);
@@ -284,7 +284,7 @@ A map, commonly known as a dictionary or hash, is an unordered collection of key
     // types the key and value should be.
     var nobleGases = new Map<int, String>();
 
-You add, get, and set map items using the bracket syntax. Use remove() to remove a key and its value from a map.
+You add, get, and set map items using the bracket syntax. Use `remove()` to remove a key and its value from a map.
 
     var nobleGases = {54: 'xenon'};
 
@@ -301,9 +301,9 @@ You add, get, and set map items using the bracket syntax. Use remove() to remove
 You can retrieve all the values or all the keys from a map:
 
     var hawaiianBeaches = {
-    'Oahu': ['Waikiki', 'Kailua', 'Waimanalo'],
-    'Big Island': ['Wailea Bay', 'Pololu Beach'],
-    'Kauai': ['Hanalei', 'Poipu']
+        'Oahu': ['Waikiki', 'Kailua', 'Waimanalo'],
+        'Big Island': ['Wailea Bay', 'Pololu Beach'],
+        'Kauai': ['Hanalei', 'Poipu']
     };
 
     // Get all the keys as an unordered collection
@@ -345,20 +345,20 @@ List, Set, and Map share common functionality found in many collections. Some of
 
 >Note: Although Map doesn’t implement Iterable, you can get Iterables from it using the Map keys and values properties.
 
-Use isEmpty or isNotEmpty to check whether a list, set, or map has items:
+Use `isEmpty` or `isNotEmpty` to check whether a list, set, or map has items:
 
     var coffees = [];
     var teas = ['green', 'black', 'chamomile', 'earl grey'];
     assert(coffees.isEmpty);
     assert(teas.isNotEmpty);
 
-To apply a function to each item in a list, set, or map, you can use forEach():
+To apply a function to each item in a list, set, or map, you can use `forEach()`:
 
     var teas = ['green', 'black', 'chamomile', 'earl grey'];
 
     teas.forEach((tea) => print('I drink $tea'));
     
-When you invoke forEach() on a map, your function must take two arguments (the key and value):
+When you invoke `forEach()` on a map, your function must take two arguments `(the key and value)`:
 
     hawaiianBeaches.forEach((k, v) {
         print('I want to visit $k and swim at $v');
@@ -366,21 +366,20 @@ When you invoke forEach() on a map, your function must take two arguments (the k
         // [Waikiki, Kailua, Waimanalo], etc.
     });
     
-Iterables provide the map() method, which gives you all the results in a single object:
+Iterables provide the `map()` method, which gives you all the results in a single object:
 
-var teas = ['green', 'black', 'chamomile', 'earl grey'];
-
+    var teas = ['green', 'black', 'chamomile', 'earl grey'];
     var loudTeas = teas.map((tea) => tea.toUpperCase());
     loudTeas.forEach(print);
 
 >Note: The object returned by map() is an Iterable that’s lazily evaluated: your function isn’t called until you ask for an item from the returned object.
 
-To force your function to be called immediately on each item, use map().toList() or map().toSet():
+>To force your function to be called immediately on each item, use `map().toList()` or `map().toSet()`:
 
     var loudTeas =
         teas.map((tea) => tea.toUpperCase()).toList();
 
-Use Iterable’s where() method to get all the items that match a condition. Use Iterable’s any() and every() methods to check whether some or all items match a condition.
+Use Iterable’s `where()` method to get all the items that match a condition. Use Iterable’s `any()` and `every()` methods to check whether some or all items match a condition.
 
     var teas = ['green', 'black', 'chamomile', 'earl grey'];
 

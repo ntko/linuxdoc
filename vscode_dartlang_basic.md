@@ -31,6 +31,8 @@
     - [Conditional expressions](#conditional-expressions)
     - [Cascade notation (..)](#cascade-notation-)
     - [Control flow statements](#control-flow-statements)
+        - [For loops](#for-loops)
+        - [While and do-while](#while-and-do-while)
         - [Switch and case](#switch-and-case)
     - [Exceptions](#exceptions)
         - [Throw](#throw)
@@ -655,7 +657,48 @@ You can control the flow of your Dart code using any of the following:
 
 You can also affect the control flow using **`try-catch` and `throw`**, as explained in Exceptions.
 
+#### For loops
+You can iterate with the standard for loop. For example:
 
+    var message = StringBuffer('Dart is fun');
+    for (var i = 0; i < 5; i++) {
+      message.write('!');
+    }
+    
+Closures inside of Dart’s for loops capture the value of the index, avoiding a common pitfall found in JavaScript. For example, consider:
+
+    var callbacks = [];
+    for (var i = 0; i < 2; i++) {
+      callbacks.add(() => print(i));
+    }
+    callbacks.forEach((c) => c());
+    
+The output is 0 and then 1, as expected. In contrast, the example would print 2 and then 2 in JavaScript.
+
+If the object that you are iterating over is an Iterable, you can use the `forEach()` method. Using forEach() is a good option if you don’t need to know the current iteration counter:
+
+    candidates.forEach((candidate) => candidate.interview());
+    
+Iterable classes such as List and Set also support the `for-in` form of iteration:
+
+    var collection = [0, 1, 2];
+    for (var x in collection) {
+      print(x); // 0 1 2
+    }
+
+#### While and do-while
+
+A while loop evaluates the condition before the loop:
+
+    while (!isDone()) {
+      doSomething();
+    }
+
+A do-while loop evaluates the condition after the loop:
+
+    do {
+      printLine();
+    } while (!atEndOfPage());
 
 #### Switch and case
 
@@ -1113,6 +1156,8 @@ To make a method abstract, use a semicolon (;) instead of a method body:
         // Provide an implementation, so the method is not abstract here...
       }
     }
+
+>NOTE: use `extends` create subclass ,thus we can use `super` to refer parent class. In contrast to `implements` that just implements a class.    
 
 Calling an abstract method results in a runtime error.
 
