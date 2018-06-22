@@ -16,6 +16,19 @@
         - [Sets](#sets)
         - [Maps](#maps)
         - [Common collection methods](#common-collection-methods)
+    - [dart:core URIs](#dartcore-uris)
+        - [Encoding and decoding fully qualified URIs](#encoding-and-decoding-fully-qualified-uris)
+        - [Encoding and decoding URI components](#encoding-and-decoding-uri-components)
+        - [Parsing URIs](#parsing-uris)
+        - [Building URIs](#building-uris)
+    - [dart:core Dates and times](#dartcore-dates-and-times)
+    - [dart:core Utility classes](#dartcore-utility-classes)
+        - [Comparing objects](#comparing-objects)
+        - [Implementing map keys](#implementing-map-keys)
+        - [Iteration](#iteration)
+    - [dart:core Exceptions](#dartcore-exceptions)
+        - [NoSuchMethodError](#nosuchmethoderror)
+        - [ArgumentError](#argumenterror)
 
 <!-- /TOC -->
 
@@ -402,4 +415,235 @@ Use Iterable’s `where()` method to get all the items that match a condition. U
     assert(!teas.every(isDecaffeinated));
     
 For a full list of methods, refer to the Iterable API docs, as well as those for List, Set, and Map.
+
+## dart:core URIs
+
+The Uri class provides functions to encode and decode strings for use in URIs (which you might know as URLs). These functions handle characters that are special for URIs, such as & and =. The Uri class also parses and exposes the components of a URI—host, port, scheme, and so on.
+
+### Encoding and decoding fully qualified URIs
+
+To encode and decode characters except those with special meaning in a URI (such as /, :, &, #), use the `encodeFull()` and `decodeFull()` methods. These methods are good for encoding or decoding a fully qualified URI, leaving intact special URI characters.
+
+    var uri = 'http://example.org/api?foo=some message';
+
+    var encoded = Uri.encodeFull(uri);
+    assert(encoded ==
+        'http://example.org/api?foo=some%20message');
+
+    var decoded = Uri.decodeFull(encoded);
+    assert(uri == decoded);
+    
+Notice how only the space between some and message was encoded.
+
+### Encoding and decoding URI components
+
+To encode and decode all of a string’s characters that have special meaning in a URI, including (but not limited to) /, &, and :, use the `encodeComponent()` and `decodeComponent()` methods.
+
+    var uri = 'http://example.org/api?foo=some message';
+
+    var encoded = Uri.encodeComponent(uri);
+    assert(encoded ==
+        'http%3A%2F%2Fexample.org%2Fapi%3Ffoo%3Dsome%20message');
+
+    var decoded = Uri.decodeComponent(encoded);
+    assert(uri == decoded);
+Notice how every special character is encoded. For example, / is encoded to %2F.
+
+### Parsing URIs
+
+If you have a Uri object or a URI string, you can get its parts using Uri fields such as path. To create a Uri from a string, use the `parse() static` method:
+
+    var uri =
+        Uri.parse('http://example.org:8080/foo/bar#frag');
+
+    assert(uri.scheme == 'http');
+    assert(uri.host == 'example.org');
+    assert(uri.path == '/foo/bar');
+    assert(uri.fragment == 'frag');
+    assert(uri.origin == 'http://example.org:8080');
+    
+See the Uri API docs for more URI components that you can get.
+
+### Building URIs
+
+You can build up a URI from individual parts using the `Uri()` constructor:
+
+    var uri = new Uri(
+        scheme: 'http',
+        host: 'example.org',
+        path: '/foo/bar',
+        fragment: 'frag');
+    assert(
+        uri.toString() == 'http://example.org/foo/bar#frag');
+
+## dart:core Dates and times
+
+A DateTime object is a point in time. The time zone is either UTC or the local time zone.
+
+You can create DateTime objects using several constructors:
+
+    // Get the current date and time.
+    var now = new DateTime.now();
+
+    // Create a new DateTime with the local time zone.
+    var y2k = new DateTime(2000); // January 1, 2000
+
+    // Specify the month and day.
+    y2k = new DateTime(2000, 1, 2); // January 2, 2000
+
+    // Specify the date as a UTC time.
+    y2k = new DateTime.utc(2000); // 1/1/2000, UTC
+
+    // Specify a date and time in ms since the Unix epoch.
+    y2k = new DateTime.fromMillisecondsSinceEpoch(946684800000,
+        isUtc: true);
+
+    // Parse an ISO 8601 date.
+    y2k = DateTime.parse('2000-01-01T00:00:00Z');
+
+The millisecondsSinceEpoch property of a date returns the number of milliseconds since the “Unix epoch”—January 1, 1970, UTC:
+
+    // 1/1/2000, UTC
+    var y2k = new DateTime.utc(2000);
+    assert(y2k.millisecondsSinceEpoch == 946684800000);
+
+    // 1/1/1970, UTC
+    var unixEpoch = new DateTime.utc(1970);
+    assert(unixEpoch.millisecondsSinceEpoch == 0);
+
+Use the `Duration` class to calculate the difference between two dates and to shift a date forward or backward:
+
+    var y2k = new DateTime.utc(2000);
+
+    // Add one year.
+    var y2001 = y2k.add(const Duration(days: 366));
+    assert(y2001.year == 2001);
+
+    // Subtract 30 days.
+    var december2000 =
+        y2001.subtract(const Duration(days: 30));
+    assert(december2000.year == 2000);
+    assert(december2000.month == 12);
+
+    // Calculate the difference between two dates.
+    // Returns a Duration object.
+    var duration = y2001.difference(y2k);
+    assert(duration.inDays == 366); // y2k was a leap year.
+
+> Warning: Using a Duration to shift a DateTime by days can be problematic, due to clock shifts (to daylight saving time, for example). Use UTC dates if you must shift days.
+
+Refer to the API docs for DateTime and Duration for a full list of methods.
+
+## dart:core Utility classes
+
+The core library contains various utility classes, useful for sorting, mapping values, and iterating.
+
+### Comparing objects
+
+Implement the Comparable interface to indicate that an object can be compared to another object, usually for sorting. The compareTo() method returns < 0 for smaller, 0 for the same, and > 0 for bigger.
+
+    class Line implements Comparable<Line> {
+      final int length;
+      const Line(this.length);
+
+      @override
+      int compareTo(Line other) => length - other.length;
+    }
+
+    void main() {
+      var short = const Line(1);
+      var long = const Line(100);
+      assert(short.compareTo(long) < 0);
+    }
+
+### Implementing map keys
+
+Each object in Dart automatically provides an integer hash code, and thus can be used as a key in a map. However, you can override the hashCode getter to generate a custom hash code. If you do, you might also want to override the == operator. Objects that are equal (via ==) must have identical hash codes. A hash code doesn’t have to be unique, but it should be well distributed.
+
+    class Person {
+      final String firstName, lastName;
+    
+      Person(this.firstName, this.lastName);
+    
+      // Override hashCode using strategy from Effective Java,
+      // Chapter 11.
+      @override
+      int get hashCode {
+        int result = 17;
+        result = 37 * result + firstName.hashCode;
+        result = 37 * result + lastName.hashCode;
+        return result;
+      }
+    
+      // You should generally implement operator == if you
+      // override hashCode.
+      @override
+      bool operator ==(dynamic other) {
+        if (other is! Person) return false;
+        Person person = other;
+        return (person.firstName == firstName &&
+            person.lastName == lastName);
+      }
+    }
+
+    void main() {
+      var p1 = new Person('Bob', 'Smith');
+      var p2 = new Person('Bob', 'Smith');
+      var p3 = 'not a person';
+      assert(p1.hashCode == p2.hashCode);
+      assert(p1 == p2);
+      assert(p1 != p3);
+    }
+
+### Iteration
+
+The Iterable and Iterator classes support for-in loops. `Extend (if possible)` or `implement` Iterable whenever you create a class that can provide Iterators for use in for-in loops. Implement Iterator to define the actual iteration ability.
+
+    class Process {
+      // Represents a process...
+    }
+    
+    class ProcessIterator implements Iterator<Process> {
+      @override
+      Process get current => ...
+      @override
+      bool moveNext() => ...
+    }
+    
+    // A mythical class that lets you iterate through all
+    // processes. Extends a subclass of [Iterable].
+    class Processes extends IterableBase<Process> {
+      @override
+      final Iterator<Process> iterator = new ProcessIterator();
+    }
+    
+    void main() {
+      // Iterable objects can be used with for-in.
+      for (var process in new Processes()) {
+        // Do something with the process.
+      }
+    }
+## dart:core Exceptions
+The Dart core library defines many common exceptions and errors. Exceptions are considered conditions that you can plan ahead for and catch. Errors are conditions that you don’t expect or plan for.
+
+A couple of the most common errors are:
+
+### NoSuchMethodError
+Thrown when a receiving object (which might be null) does not implement a method.
+
+### ArgumentError
+Can be thrown by a method that encounters an unexpected argument.
+
+Throwing an application-specific exception is a common way to indicate that an error has occurred. You can define a custom exception by implementing the Exception interface:
+
+    class FooException implements Exception {
+      final String msg;
+
+      const FooException([this.msg]);
+
+      @override
+      String toString() => msg ?? 'FooException';
+    }
+    
+For more information, see Exceptions and the Exception API docs.
 
