@@ -55,6 +55,10 @@
     $ git config --global credential.helper 'cache --timeout=3600'
     # Set the cache to timeout after 1 hour (setting is in seconds)
 
+if we use github and don't want to enter password anyway, use this:
+
+    git remote set-url origin https://<USERNAME>:<PASSWORD>@github.com/yourusername/repo.git
+
 ### Using credential helpers to cache passwords
 
 > [REF:https://git.seveas.net/using-credential-helpers-to-cache-passwords.html](https://git.seveas.net/using-credential-helpers-to-cache-passwords.html)
