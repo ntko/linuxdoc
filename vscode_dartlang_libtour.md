@@ -34,6 +34,19 @@
         - [Basic usage](#basic-usage)
         - [Chaining multiple asynchronous methods](#chaining-multiple-asynchronous-methods)
         - [Waiting for multiple futures](#waiting-for-multiple-futures)
+        - [Stream](#stream)
+        - [Using an asynchronous for loop](#using-an-asynchronous-for-loop)
+        - [Listening for stream data](#listening-for-stream-data)
+        - [Transforming stream data](#transforming-stream-data)
+        - [Handling errors and completion](#handling-errors-and-completion)
+    - [dart:math - math and random](#dartmath---math-and-random)
+        - [Trigonometry](#trigonometry)
+        - [Maximum and minimum](#maximum-and-minimum)
+        - [Math constants](#math-constants)
+        - [Random numbers](#random-numbers)
+    - [dart:convert - decoding and encoding JSON, UTF-8, and more](#dartconvert---decoding-and-encoding-json-utf-8-and-more)
+        - [Decoding and encoding JSON](#decoding-and-encoding-json)
+        - [Decoding and encoding UTF-8 characters](#decoding-and-encoding-utf-8-characters)
 
 <!-- /TOC -->
 
@@ -754,4 +767,243 @@ Sometimes your algorithm needs to invoke many asynchronous functions and wait fo
     ]);
     print('Done with all the long steps!');
     
+### Stream
+Stream objects appear throughout Dart APIs, representing sequences of data. For example, HTML events such as button clicks are delivered using streams. You can also read a file as a stream.
+
+### Using an asynchronous for loop
+Sometimes you can use an `asynchronous for loop (await for)` instead of using the Stream API.
+
+Consider the following function. It uses Stream’s listen() method to subscribe to a list of files, passing in a function literal that searches each file or directory.
+
+    void main(List<String> arguments) {
+      // ...
+      FileSystemEntity.isDirectory(searchPath).then((isDir) {
+        if (isDir) {
+          final startingDir = new Directory(searchPath);
+          startingDir
+              .list(
+                  recursive: argResults[recursive],
+                  followLinks: argResults[followLinks])
+              .listen((entity) {
+            if (entity is File) {
+              searchFile(entity, searchTerms);
+            }
+          });
+        } else {
+          searchFile(new File(searchPath), searchTerms);
+        }
+      });
+    }
+
+The equivalent code with await expressions, including an asynchronous for loop (await for), looks more like synchronous code:
+
+    Future main(List<String> arguments) async {
+      // ...
+      if (await FileSystemEntity.isDirectory(searchPath)) {
+        final startingDir = new Directory(searchPath);
+        await for (var entity in startingDir.list(
+            recursive: argResults[recursive],
+            followLinks: argResults[followLinks])) {
+          if (entity is File) {
+            searchFile(entity, searchTerms);
+          }
+        }
+      } else {
+        searchFile(new File(searchPath), searchTerms);
+      }
+    }
     
+>Important: Before using await for, make sure that it makes the code clearer and that you really do want to wait for all of the stream’s results. For example, you usually should not use await for for DOM event listeners, because the DOM sends endless streams of events. If you use await for to register two DOM event listeners in a row, then the second kind of event is never handled.
+
+### Listening for stream data
+To get each value as it arrives, either use await for or subscribe to the stream using the listen() method:
+
+    // Find a button by ID and add an event handler.
+    querySelector('#submitInfo').onClick.listen((e) {
+      // When the button is clicked, it runs this code.
+      submitData();
+    });
+    
+In this example, the onClick property is a Stream object provided by the “submitInfo” button.
+
+If you care about only one event, you can get it using a property such as first, last, or single. To test the event before handling it, use a method such as `firstWhere(), lastWhere(), or singleWhere()`.
+
+If you care about a subset of events, you can use methods such as `skip(), skipWhile(), take(), takeWhile(), and where()`.
+
+### Transforming stream data
+Often, you need to change the format of a stream’s data before you can use it. Use the transform() method to produce a stream with a different type of data:
+
+var lines = inputStream
+    .transform(utf8.decoder)
+    .transform(new LineSplitter());
+
+This example uses two transformers. First it uses utf8.decoder to transform the stream of integers into a stream of strings. Then it uses a LineSplitter to transform the stream of strings into a stream of separate lines. These transformers are from the dart:convert library (see the dart:convert section).
+
+### Handling errors and completion
+How you specify error and completion handling code depends on whether you use an asynchronous for loop (await for) or the Stream API.
+
+If you use an asynchronous for loop, then use try-catch to handle errors. Code that executes after the stream is closed goes after the asynchronous for loop.
+
+    Future readFileAwaitFor() async {
+      var config = new File('config.txt');
+      Stream<List<int>> inputStream = config.openRead();
+
+      var lines = inputStream
+          .transform(utf8.decoder)
+          .transform(new LineSplitter());
+      try {
+        await for (var line in lines) {
+          print('Got ${line.length} characters from stream');
+        }
+        print('file is now closed');
+      } catch (e) {
+        print(e);
+      }
+    }
+    
+If you use the Stream API, then handle errors by registering an onError listener. Run code after the stream is closed by registering an onDone listener.
+
+    var config = new File('config.txt');
+    Stream<List<int>> inputStream = config.openRead();
+
+    inputStream
+        .transform(utf8.decoder)
+        .transform(new LineSplitter())
+        .listen((String line) {
+      print('Got ${line.length} characters from stream');
+    }, onDone: () {
+      print('file is now closed');
+    }, onError: (e) {
+      print(e);
+    });
+    
+## dart:math - math and random
+    
+### Trigonometry
+The Math library provides basic trigonometric functions:
+
+    // Cosine
+    assert(cos(pi) == -1.0);
+
+    // Sine
+    var degrees = 30;
+    var radians = degrees * (pi / 180);
+    // radians is now 0.52359.
+    var sinOf30degrees = sin(radians);
+    // sin 30° = 0.5
+    assert((sinOf30degrees - 0.5).abs() < 0.01);
+
+>Note: These functions use radians, not degrees!
+
+### Maximum and minimum
+The Math library provides max() and min() methods:
+
+    assert(max(1, 1000) == 1000);
+    assert(min(1, -1000) == -1000);
+### Math constants
+Find your favorite constants—pi, e, and more—in the Math library:
+
+    // See the Math library for additional constants.
+    print(e); // 2.718281828459045
+    print(pi); // 3.141592653589793
+    print(sqrt2); // 1.4142135623730951
+### Random numbers
+Generate random numbers with the Random class. You can optionally provide a seed to the Random constructor.
+
+    var random = new Random();
+    random.nextDouble(); // Between 0.0 and 1.0: [0, 1)
+    random.nextInt(10); // Between 0 and 9.
+
+You can even generate random booleans:
+
+    var random = new Random();
+    random.nextBool(); // true or false
+
+## dart:convert - decoding and encoding JSON, UTF-8, and more
+The dart:convert library (API reference) has converters for JSON and UTF-8, as well as support for creating additional converters. JSON is a simple text format for representing structured objects and collections. UTF-8 is a common variable-width encoding that can represent every character in the Unicode character set.
+
+The dart:convert library works in both web apps and command-line apps. To use it, import dart:convert.
+
+    import 'dart:convert';
+    
+### Decoding and encoding JSON
+Decode a JSON-encoded string into a Dart object with jsonDecode():
+
+    // NOTE: Be sure to use double quotes ("),
+    // not single quotes ('), inside the JSON string.
+    // This string is JSON, not Dart.
+    var jsonString = '''
+      [
+        {"score": 40},
+        {"score": 80}
+      ]
+    ''';
+
+    var scores = jsonDecode(jsonString);
+    assert(scores is List);
+
+    var firstScore = scores[0];
+    assert(firstScore is Map);
+    assert(firstScore['score'] == 40);
+    
+Encode a supported Dart object into a JSON-formatted string with jsonEncode():
+
+    var scores = [
+      {'score': 40},
+      {'score': 80},
+      {'score': 100, 'overtime': true, 'special_guest': null}
+    ];
+
+    var jsonText = jsonEncode(scores);
+    assert(jsonText ==
+        '[{"score":40},{"score":80},'
+        '{"score":100,"overtime":true,'
+        '"special_guest":null}]');
+        
+Only objects of type int, double, String, bool, null, List, or Map (with string keys) are directly encodable into JSON. List and Map objects are encoded recursively.
+
+You have two options for encoding objects that aren’t directly encodable. 
+* The first is to invoke encode() with a second argument: a function that returns an object that is directly encodable. 
+* Your second option is to omit the second argument, in which case the encoder calls the object’s `toJson()` method.
+
+### Decoding and encoding UTF-8 characters
+Use `utf8.decode()` to decode UTF8-encoded bytes to a Dart string:
+
+    List<int> utf8Bytes = [
+      0xc3, 0x8e, 0xc3, 0xb1, 0xc5, 0xa3, 0xc3, 0xa9,
+      0x72, 0xc3, 0xb1, 0xc3, 0xa5, 0xc5, 0xa3, 0xc3,
+      0xae, 0xc3, 0xb6, 0xc3, 0xb1, 0xc3, 0xa5, 0xc4,
+      0xbc, 0xc3, 0xae, 0xc5, 0xbe, 0xc3, 0xa5, 0xc5,
+      0xa3, 0xc3, 0xae, 0xe1, 0xbb, 0x9d, 0xc3, 0xb1
+    ];
+
+    var funnyWord = utf8.decode(utf8Bytes);
+
+    assert(funnyWord == 'Îñţérñåţîöñåļîžåţîờñ');
+    
+To convert a stream of UTF-8 characters into a Dart string, specify `utf8.decoder` to the Stream `transform()` method:
+
+    var lines = inputStream
+        .transform(utf8.decoder)
+        .transform(new LineSplitter());
+    try {
+      await for (var line in lines) {
+        print('Got ${line.length} characters from stream');
+      }
+      print('file is now closed');
+    } catch (e) {
+      print(e);
+    }
+
+Use `utf8.encode()` to encode a Dart string as a list of UTF8-encoded bytes:
+
+    List<int> encoded = utf8.encode('Îñţérñåţîöñåļîžåţîờñ');
+
+    assert(encoded.length == utf8Bytes.length);
+    for (int i = 0; i < encoded.length; i++) {
+      assert(encoded[i] == utf8Bytes[i]);
+    }
+    
+Other functionality
+The dart:convert library also has converters for ASCII and ISO-8859-1 (Latin1). For details, see the API docs for the dart:convert library.
+
