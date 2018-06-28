@@ -6,17 +6,18 @@
     - [Install Markdown-TOC plugin for markdown file](#install-markdown-toc-plugin-for-markdown-file)
     - [Howto Use startup lib stagehand](#howto-use-startup-lib-stagehand)
     - [DartLang Basic](#dartlang-basic)
-    - [Final and const](#final-and-const)
-    - [Numbers](#numbers)
-        - [int](#int)
-        - [double](#double)
-        - [Number<->String convert](#number-string-convert)
-    - [Strings](#strings)
-    - [Lists](#lists)
-    - [Maps](#maps)
-    - [Runes](#runes)
-    - [How do I reverse a String in Dart?](#how-do-i-reverse-a-string-in-dart)
-    - [Symbols](#symbols)
+        - [Final and const](#final-and-const)
+    - [Built-in types](#built-in-types)
+        - [Numbers](#numbers)
+            - [int](#int)
+            - [double](#double)
+            - [Number<->String convert](#number-string-convert)
+        - [Strings](#strings)
+        - [Lists](#lists)
+        - [Maps](#maps)
+        - [Runes](#runes)
+        - [How do I reverse a String in Dart?](#how-do-i-reverse-a-string-in-dart)
+        - [Symbols](#symbols)
     - [Functions](#functions)
         - [The main() function](#the-main-function)
         - [Functions Basic](#functions-basic)
@@ -28,8 +29,8 @@
         - [Lexical closures](#lexical-closures)
         - [Testing functions for equality](#testing-functions-for-equality)
     - [Operators](#operators)
-    - [Conditional expressions](#conditional-expressions)
-    - [Cascade notation (..)](#cascade-notation-)
+        - [Conditional expressions](#conditional-expressions)
+        - [Cascade notation (..)](#cascade-notation-)
     - [Control flow statements](#control-flow-statements)
         - [For loops](#for-loops)
         - [While and do-while](#while-and-do-while)
@@ -46,7 +47,7 @@
         - [Invoking a non-default superclass constructor](#invoking-a-non-default-superclass-constructor)
         - [Initializer list](#initializer-list)
         - [Redirecting constructors](#redirecting-constructors)
-        - [Constant constructors](#constant-constructors)
+            - [Constant constructors](#constant-constructors)
         - [Factory constructors](#factory-constructors)
         - [Instance methods](#instance-methods)
         - [Getters and setters](#getters-and-setters)
@@ -55,7 +56,7 @@
         - [Implementing map keys](#implementing-map-keys)
         - [Implicit interfaces](#implicit-interfaces)
         - [Extending a class](#extending-a-class)
-        - [noSuchMethod()](#nosuchmethod)
+            - [noSuchMethod()](#nosuchmethod)
         - [Enumerated types](#enumerated-types)
             - [Using enums](#using-enums)
         - [Adding features to a class: mixins](#adding-features-to-a-class-mixins)
@@ -72,9 +73,10 @@
         - [Importing only part of a library](#importing-only-part-of-a-library)
         - [Lazily loading a library](#lazily-loading-a-library)
         - [Implementing libraries](#implementing-libraries)
-    - [Handling Futures](#handling-futures)
+    - [Asynchrony support](#asynchrony-support)
+        - [Handling Futures](#handling-futures)
         - [Declaring async functions](#declaring-async-functions)
-    - [Handling Streams](#handling-streams)
+        - [Handling Streams](#handling-streams)
     - [Generators](#generators)
         - [Synchronous Generators](#synchronous-generators)
         - [Asynchronous Generators](#asynchronous-generators)
@@ -95,13 +97,13 @@
 
 <!-- /TOC -->
 
-## Linux下使用vscode开发Dart环境配置相关问题
+# Linux下使用vscode开发Dart环境配置相关问题
 
-### Install Dart VM SDK:
+## Install Dart VM SDK:
 
 > [REF:https://www.dartlang.org/tools/sdk#install](https://www.dartlang.org/tools/sdk#install)
 
-### Install Dart vscode plugin
+## Install Dart vscode plugin
 
 * Start VS Code
 * Invoke View>Command Palette…
@@ -109,11 +111,11 @@
 * Enter flutter in the search field, select ‘Dart’ in the list, and click Install
 * Select ‘OK’ to reload VS Code
 
-### Install Markdown-TOC plugin for markdown file
+## Install Markdown-TOC plugin for markdown file
 
 * alanwalk.markdown-toc
 
-### Howto Use startup lib stagehand
+## Howto Use startup lib stagehand
 
     $ pub global activate stagehand
     $ stagehand console-full  //create console demo app.
@@ -123,7 +125,7 @@
     PATH="$PATH:/usr/lib/dart/bin"
     PATH="$PATH":"~/.pub-cache/bin"
 
-### DartLang Basic
+## DartLang Basic
 
 > Note: The assert() call is ignored in production code. During development, assert(condition) throws an exception unless condition is true.
 
@@ -144,7 +146,7 @@ Use const for variables that you want to be compile-time constants. If the const
 
 > Note: Instance variables can be final but not const.
 
-Built-in types
+## Built-in types
 The Dart language has special support for the following types:
 
 * numbers
@@ -363,9 +365,9 @@ To get the symbol for an identifier, use a symbol literal, which is just # follo
     #bar
 Symbol literals are compile-time constants.
 
-### Functions
+## Functions
 
-#### The main() function
+### The main() function
 Every app must have a top-level main() function, which serves as the entrypoint to the app. The main() function returns void and has an optional List<String> parameter for arguments.
 
 Here’s an example of the main() function for a web app:
@@ -389,7 +391,7 @@ Here’s an example of the main() function for a command-line app that takes arg
       assert(arguments[1] == 'test');
     }
 
-#### Functions Basic
+### Functions Basic
 
 Dart is a true object-oriented language, so even functions are objects and have a type, Function. This means that functions can be assigned to variables or passed as arguments to other functions. You can also call an instance of a Dart class as if it were a function. For details, see `Callable classes`.
 
@@ -413,10 +415,10 @@ The => expr syntax is a shorthand for { return expr; }. The => notation is somet
 
 A function can have two types of parameters: required and optional. The required parameters are listed first, followed by any optional parameters.
 
-#### Optional parameters
+### Optional parameters
 Optional parameters can be either positional or named, **but not both**.
 
-##### Optional named parameters
+#### Optional named parameters
 
 When defining a function, use **`{param1, param2, …}`** to specify named parameters:
 
@@ -439,7 +441,7 @@ default values for named parameters:
     // bold will be true; hidden will be false.
     enableFlags(bold: true);    
 
-##### Optional positional parameters
+#### Optional positional parameters
 Wrapping a set of function parameters **`in [] marks`** them as optional positional parameters:
 
     String say(String from, String msg, [String device]) {
@@ -480,7 +482,7 @@ default values for positional parameters:
       print('gifts: $gifts');
     }    
 
-#### Functions as first-class objects
+### Functions as first-class objects
 You can pass a function as a parameter to another function. For example:
 
     void printElement(int element) {
@@ -501,7 +503,7 @@ You can also assign a function to a variable, such as:
 
 This example uses an anonymous function. More about those in the next section.
 
-#### Anonymous functions
+### Anonymous functions
 
 Most functions are named, such as main() or printElement(). You can also create a nameless function called an anonymous function, or sometimes a lambda or closure. You might assign an anonymous function to a variable so that, for example, you can add or remove it from a collection.
 
@@ -520,7 +522,7 @@ The following example defines an anonymous function with an untyped parameter, i
       print('${list.indexOf(item)}: $item');
     });
 
-#### Lexical closures
+### Lexical closures
 
 A **`closure`** is a function object that has access to variables in its lexical scope, even when the function is used outside of its original scope.
 
@@ -543,7 +545,7 @@ Functions can close over variables defined in surrounding scopes. In the followi
       assert(add4(3) == 7);
     }
 
-#### Testing functions for equality
+### Testing functions for equality
 
 Here’s an example of testing top-level functions, static methods, and instance methods for equality:
 
@@ -580,7 +582,7 @@ Here’s an example of testing top-level functions, static methods, and instance
       assert(v.baz != w.baz);
     }
 
-### Operators    
+## Operators    
 
 In dart, there are some unique(unusual) Operators. for example:
 
@@ -644,7 +646,7 @@ examples:
       ..classes.add('important')
       ..onClick.listen((e) => window.alert('Confirmed!'));
 
-### Control flow statements
+## Control flow statements
 
 You can control the flow of your Dart code using any of the following:
 
@@ -657,7 +659,7 @@ You can control the flow of your Dart code using any of the following:
 
 You can also affect the control flow using **`try-catch` and `throw`**, as explained in Exceptions.
 
-#### For loops
+### For loops
 You can iterate with the standard for loop. For example:
 
     var message = StringBuffer('Dart is fun');
@@ -686,7 +688,7 @@ Iterable classes such as List and Set also support the `for-in` form of iteratio
       print(x); // 0 1 2
     }
 
-#### While and do-while
+### While and do-while
 
 A while loop evaluates the condition before the loop:
 
@@ -700,7 +702,7 @@ A do-while loop evaluates the condition after the loop:
       printLine();
     } while (!atEndOfPage());
 
-#### Switch and case
+### Switch and case
 
 Switch statements in Dart compare integer, string, or compile-time constants using ==. The compared objects must all be instances of the same class (and not of any of its subtypes), and the class must not override ==. Enumerated types work well in switch statements.
 
@@ -769,7 +771,7 @@ If you really want fall-through, you can use a continue statement and a label:
         break;
     }
 
-### Exceptions
+## Exceptions
 
 Your Dart code can throw and catch exceptions. If the exception isn’t caught, the isolate that raised the exception is suspended, and typically the isolate and its program are terminated.
 
@@ -777,7 +779,7 @@ In contrast to Java, all of Dart’s exceptions are unchecked exceptions. Method
 
 Dart provides `Exception` and `Error` types, as well as numerous predefined subtypes. You can, of course, define your own exceptions. However, Dart programs can throw any non-null object—not just Exception and Error objects—as an exception.
 
-#### Throw
+### Throw
 Here’s an example of throwing, or raising, an exception:
 
     throw new FormatException('Expected at least 1 section');
@@ -792,7 +794,7 @@ Because **`throwing an exception`** is an **`expression`**, you can throw except
 
     void distanceTo(Point other) =>
         throw new UnimplementedError();
-#### Catch
+### Catch
 
 Catching, or capturing, an exception **`stops the exception from propagating (unless you rethrow the exception)`**. Catching an exception gives you a chance to handle it:
 
@@ -850,7 +852,7 @@ To partially handle an exception, while allowing it to propagate, use the **`ret
       }
     }
 
-#### Finally
+### Finally
 
 To ensure that some code runs whether or not an exception is thrown, use a finally clause. If no catch clause matches the exception, the exception is propagated after the finally clause runs:
 
@@ -873,7 +875,7 @@ The finally clause runs after any matching catch clauses:
 
 Learn more by reading the Exceptions section.
 
-### Classes
+## Classes
 
 Dart is an object-oriented language with classes and mixin-based inheritance. Every object is an instance of a class, and all classes descend from `Object`. 
 
@@ -892,7 +894,7 @@ To create an object, you can use the new keyword with a constructor for a class.
     // If p is non-null, set its y value to 4.
     p?.y = 4;
 
-#### Instance variables
+### Instance variables
 
 Here’s how you declare instance variables:
 
@@ -920,7 +922,7 @@ All instance variables generate an implicit getter method. Non-final instance va
     
 If you initialize an instance variable where it is declared (instead of in a constructor or method), the value is set **when the instance is created, which is before the constructor and its initializer list execute**.
 
-#### Constructors Basic
+### Constructors Basic
 
 A function with the same name as its class (plus, optionally, an additional identifier as described in **`Named constructors`**). The most common form of constructor, the generative constructor, creates a new instance of a class. example:
 
@@ -948,13 +950,13 @@ class Point {
   Point(this.x, this.y);
 }
 
-#### Default constructors
+### Default constructors
 If you don’t declare a constructor, a default constructor is provided for you. The default constructor has no arguments and invokes the no-argument constructor in the superclass.
 
 > #### Constructors aren’t inherited
 > Subclasses don’t inherit constructors from their superclass. A subclass that declares no constructors has only the default (no argument, no name) constructor.
 
-#### Named constructors
+### Named constructors
 Use a named constructor to implement multiple constructors for a class or to provide extra clarity:
 
     class Point {
@@ -971,7 +973,7 @@ Use a named constructor to implement multiple constructors for a class or to pro
 
 > Remember that constructors are **`not inherited`**, which means that a superclass’s named constructor is not inherited by a subclass. If you want a subclass to be created with a named constructor defined in the superclass, **`you must implement that constructor in the subclass`**.
 
-#### Invoking a non-default superclass constructor
+### Invoking a non-default superclass constructor
 By default, a constructor in a subclass calls the superclass’s unnamed, no-argument constructor. The superclass’s constructor is called at the beginning of the constructor body. If an initializer list is also being used, it executes before the superclass is called. In summary, the order of execution is as follows:
 
 1. initializer list
@@ -996,7 +998,7 @@ If the superclass doesn’t have an unnamed, no-argument constructor, then you *
       }
     }
 
-#### Initializer list
+### Initializer list
 Besides invoking a superclass constructor, you can also initialize instance variables before the constructor body runs. `Separate initializers with commas`.
 
     // Initializer list sets instance variables before
@@ -1029,7 +1031,7 @@ Besides invoking a superclass constructor, you can also initialize instance vari
       print(p.distanceFromOrigin);
     }
 
-#### Redirecting constructors
+### Redirecting constructors
 
 Sometimes a constructor’s only purpose is to redirect to another constructor in the same class. A redirecting constructor’s body is empty, with the constructor call appearing after a colon (:).
 
@@ -1055,7 +1057,7 @@ If your class produces objects that never change, you can make these objects com
       const ImmutablePoint(this.x, this.y);
     }    
 
-#### Factory constructors
+### Factory constructors
 Use the factory keyword when implementing a constructor that doesn’t always create a new instance of its class. For example, a factory constructor might return an instance from a cache, or it might return an instance of a subtype.
 
 The following example demonstrates a factory constructor returning objects from a cache:
@@ -1093,7 +1095,7 @@ To invoke a factory constructor, you use the new keyword:
     var logger = new Logger('UI');
     logger.log('Button clicked');    
 
-#### Instance methods
+### Instance methods
 
 Instance methods on objects can access instance variables and this. The distanceTo() method in the following sample is an example of an instance method:
 
@@ -1110,7 +1112,7 @@ Instance methods on objects can access instance variables and this. The distance
         return sqrt(dx * dx + dy * dy);
       }
     }
-#### Getters and setters
+### Getters and setters
 
 Getters and setters are special methods that provide read and write access to an object’s properties. Recall that each instance variable has an implicit getter, plus a setter if appropriate. You can create additional properties by implementing getters and setters, using the **`get and set`** keywords:
 
@@ -1139,7 +1141,7 @@ Getters and setters are special methods that provide read and write access to an
 
 > THINK: what if rect.right++ in the previous code?? TESTED: left is changed!
 
-#### Abstract classes and Abstract methods 
+### Abstract classes and Abstract methods 
 
 **`Instance, getter, and setter methods can be abstract`**, defining an interface but leaving its implementation up to other classes. Abstract methods can **`only exist in abstract classes`**.
 
@@ -1161,7 +1163,7 @@ To make a method abstract, use a semicolon (;) instead of a method body:
 
 Calling an abstract method results in a runtime error.
 
-#### Overridable operators
+### Overridable operators
 
 Here’s an example of a class that overrides the + and - operators:
 
@@ -1197,7 +1199,7 @@ Here’s an example of a class that overrides the + and - operators:
 
 > If you override ==, you should also override Object’s `hashCode getter`. For an example of overriding == and hashCode, see `Implementing map keys` as followed.
 
-#### Implementing map keys
+### Implementing map keys
 
 Each object in Dart automatically provides an integer hash code, and thus can be used as a key in a map. However, you can override the hashCode getter to generate a custom hash code. If you do, you might also want to override the == operator. Objects that are equal (via ==) **`must have identical hash codes`**. A hash code doesn’t have to be unique, but it should be well distributed.
 
@@ -1239,7 +1241,7 @@ Each object in Dart automatically provides an integer hash code, and thus can be
 
 For more information on overriding, in general, see `Extending a class`.
 
-#### Implicit interfaces
+### Implicit interfaces
 
 Every class implicitly defines an interface containing all the instance members of the class and of any interfaces it implements. If you want to create a class A that supports class B’s API without inheriting B’s implementation, class A should implement the B interface.
 
@@ -1277,7 +1279,7 @@ Here’s an example of specifying that a class implements multiple interfaces:
       // ···
     }
 
-#### Extending a class
+### Extending a class
 
 Use **`extends`** to create a subclass, and super to refer to the superclass.
 
@@ -1340,11 +1342,11 @@ You can’t invoke an unimplemented method unless one of the following is true:
 * The receiver has the static type dynamic.
 * The receiver has a static type that defines the unimplemented method (abstract is OK), and the dynamic type of the receiver has an implemention of noSuchMethod() that’s different from the one in class Object.
 
-#### Enumerated types
+### Enumerated types
 
 Enumerated types, often called enumerations or enums, are a special kind of class used to represent a fixed number of constant values.
 
-##### Using enums
+#### Using enums
 Declare an enumerated type using the enum keyword:
 
     enum Color { red, green, blue }
@@ -1380,7 +1382,7 @@ Enumerated types have the following limits:
 * You can’t subclass, mix in, or implement an enum.
 * You can’t explicitly instantiate an enum.
 
-#### Adding features to a class: mixins
+### Adding features to a class: mixins
 
 > NOTE: Minxins is not quite understandable, the example here is not good too. perhaps should read more source code of library.
 
@@ -1418,7 +1420,7 @@ To implement a mixin, create a class that extends Object, declares no constructo
       }
     }
 
-#### Static variables and methods
+### Static variables and methods
 
 Use the **`static`** keyword to implement class-wide variables and methods.
 
@@ -1462,7 +1464,7 @@ Static methods (class methods) do not operate on an instance, and thus do not ha
 
 You can use static methods as compile-time constants. For example, you can pass a static method as a parameter to a constant constructor.
 
-### Generics
+## Generics
 
 If you look at the API documentation for the basic array type, List, you’ll see that the type is actually List<E>. The <…> notation marks List as a generic (or parameterized) type—a type that has formal type parameters. By convention, type variables have single-letter names, such as **`E, T, S, K, and V`**.
 
@@ -1481,7 +1483,7 @@ Generic types can save you the trouble of code duplication:
 
 In this code, **`T`** is the stand-in type. It’s a placeholder that you can think of as a type that a developer will define later.
 
-#### Using collection literals
+### Using collection literals
 
 List and map literals can be parameterized. Parameterized literals are just like the literals you’ve already seen, except that you add <type> (for lists) or <keyType, valueType> (for maps) before the opening bracket. Here is example of using typed literals:
 
@@ -1492,7 +1494,7 @@ List and map literals can be parameterized. Parameterized literals are just like
       'humans.txt': 'We are people, not machines'
     };
 
-#### Using parameterized types with constructors
+### Using parameterized types with constructors
 
 To specify one or more types when using a constructor, put the types in angle brackets (<...>) just after the class name. For example:
 
@@ -1504,7 +1506,7 @@ The following code creates a map that has integer keys and values of type View:
 
     var views = new Map<int, View>();
 
-#### Generic collections and the types they contain
+### Generic collections and the types they contain
 
 Dart generic types are reified, which means that they carry their type information around at runtime. For example, you can test the type of a collection:
 
@@ -1514,7 +1516,7 @@ Dart generic types are reified, which means that they carry their type informati
 
 > Note: In contrast, generics in Java use erasure, which means that generic type parameters are removed at runtime. In Java, you can test whether an object is a List, but you can’t test whether it’s a List<String>.
 
-#### Restricting the parameterized type
+### Restricting the parameterized type
 
 When implementing a generic type, you might want to limit the types of its parameters. You can do this using extends.
 
@@ -1539,7 +1541,7 @@ Specifying any non-SomeBaseClass type results in an error:
 
     var foo = new Foo<Object>();
 
-#### Using generic methods
+### Using generic methods
 
 Initially, Dart’s generic support was limited to classes. A newer syntax, called generic methods, allows type arguments on methods and functions:
 
@@ -1558,13 +1560,13 @@ Here the generic type parameter on first (<T>) allows you to use the type argume
 
 For more information about generics, see Using Generic Methods.
 
-### Libraries and visibility
+## Libraries and visibility
 
 The import and library directives can help you create a modular and shareable code base. Libraries not only provide APIs, but are a unit of privacy: identifiers that start with an underscore (_) are visible only inside the library. **`Every Dart app is a library, even if it doesn’t use a library directive`**.
 
 Libraries can be distributed using packages. See Pub Package and Asset Manager for information about pub, a package manager included in the SDK.
 
-#### Using libraries
+### Using libraries
 Use import to specify how a namespace from one library is used in the scope of another library.
 
 ![Dart library use](imgs/dartlibuse.png)
@@ -1577,7 +1579,7 @@ The only required argument to import is a URI specifying the library. For built-
 
     import 'package:test/test.dart';
 
-#### Specifying a library prefix
+### Specifying a library prefix
 If you import two libraries that have conflicting identifiers, then you can specify a prefix for one or both libraries. For example, if library1 and library2 both have an Element class, then you might have code like this:
 
     import 'package:lib1/lib1.dart';
@@ -1589,7 +1591,7 @@ If you import two libraries that have conflicting identifiers, then you can spec
     // Uses Element from lib2.
     lib2.Element element2 = new lib2.Element();
 
-#### Importing only part of a library
+### Importing only part of a library
 If you want to use only part of a library, you can selectively import the library. For example:
 
     // Import only foo.
@@ -1598,7 +1600,7 @@ If you want to use only part of a library, you can selectively import the librar
     // Import all names EXCEPT foo.
     import 'package:lib2/lib2.dart' hide foo;
 
-#### Lazily loading a library
+### Lazily loading a library
 
 Deferred loading (also called lazy loading) allows an application to load a library on demand, if and when it’s needed. Here are some cases when you might use deferred loading:
 
@@ -1628,13 +1630,15 @@ You can’t use types from a deferred library in the importing file. Instead, co
 
 1. Dart implicitly inserts loadLibrary() into the namespace that you define using deferred as namespace. The loadLibrary() function returns a Future.
 
-#### Implementing libraries
+### Implementing libraries
 
 See Create Library Packages for advice on how to implement a library package, including:
 
 * How to organize library source code.
 * How to use the export directive.
 * When to use the part directive.
+
+## Asynchrony support
 
 ### Handling Futures
 
@@ -1675,7 +1679,7 @@ If you get a compile-time error when using await, make sure await is in an async
       print('In main: version is ${await lookUpVersion()}');
     }
 
-#### Declaring async functions
+### Declaring async functions
 
 An async function is a function whose body is marked with the async modifier.
 
@@ -1718,7 +1722,7 @@ If you get a compile-time error when implementing an asynchronous for loop, make
 
 For more information about asynchronous programming, in general, see the dart:async section of the library tour. Also see the articles Dart Language Asynchrony Support: Phase 1 and Dart Language Asynchrony Support: Phase 2, and the Dart language specification.
 
-### Generators
+## Generators
 
 When you need to lazily produce a sequence of values, consider using a generator function. Dart has built-in support for two kinds of generator functions:
 
@@ -1727,7 +1731,7 @@ When you need to lazily produce a sequence of values, consider using a generator
 
 > why? if we implement generators ourself, it may be too chicky.
 
-#### Synchronous Generators
+### Synchronous Generators
 
 To implement a **`synchronous`** generator function, mark the function body as `sync*`, and use `yield` statements to deliver values:
 
@@ -1740,7 +1744,7 @@ When called, naturalsTo immediately returns an iterable (much like a function ma
 
 The function will resume execution the next time `moveNext` is called. When the loop ends, the method implicitly executes a return, which causes it to terminate. At that point, `moveNext` returns false to its caller.
 
-#### Asynchronous Generators
+### Asynchronous Generators
 
 To asynchronously produce a sequence, we use streams. To implement an **`asynchronous`** generator function, mark the function body as `async*`, and use `yield` statements to deliver values:
 
@@ -1760,7 +1764,7 @@ Every time an element is added to the stream, the loop body is run. After each i
 
 >NOTE: Just like await expressions, await-for loops can only appear inside asynchronous functions.    
 
-#### Generators use recursive code
+### Generators use recursive code
 
 If your generator is recursive, you can improve its performance by using `yield*`:
 
@@ -1773,7 +1777,7 @@ If your generator is recursive, you can improve its performance by using `yield*
 
 For more information about generators, see the article Dart Language Asynchrony Support: Phase 2.
 
-### Callable classes
+## Callable classes
 
 To allow your Dart class to be called like a function, implement the `call()` method.
 
@@ -1789,7 +1793,7 @@ In the following example, the WannabeFunction class defines a call() function th
       print('$out');
     }
 
-#### The call() method
+### The call() method
 In the following example, we have an ordinary class WannabeFunction that happens to define a method named call().
 
     class WannabeFunction {
@@ -1806,13 +1810,13 @@ There are cases where this ability can be quite useful. It is also core to the d
 * What matters about an object is its behavior. If object a has a procedural interface that is compatible with that of another object b, a may substitute for b.
 * The interface of any kind of object can always be emulated by another suitably defined object.
 
-#### How does it work?
+### How does it work?
 
 When x(a1, .., an) is evaluated, if it is a normal function, it gets called in the normal way. If it isn’t we just invoke call() on it. If x supports a call() method with suitable arguments it gets called.
 
 Otherwise, noSuchMethod() gets invoked. The default implementation of noSuchMethod() checks to see whether it was invoked due to an attempt to use call(), and if so issues a helpful error message suggesting you might have wanted to use a closure.
 
-#### The apply() method
+### The apply() method
 
 The class Function defines the static method apply() with the following signature:
 
@@ -1822,7 +1826,7 @@ The class Function defines the static method apply() with the following signatur
                       
 The apply() function allows functions to be called in generic fashion. The last argument is positional, and is only needed if the function we mean to call takes named arguments. These are provided via map from argument names to their values. One thing to pay attention to is that names are described via instances of class **`Symbol`**.
 
-#### Symbols
+### Symbols
 
 You can create symbols from strings:
 
@@ -1834,7 +1838,7 @@ If possible, create constant symbol objects:
 
 Using constant symbols helps dart2js minify your code.
 
-#### Function types
+### Function types
 
 An additional issue is how user-defined function classes relate to the type system. To simulate functions properly, we want them to be members of the appropriate function type:
 
@@ -1844,7 +1848,7 @@ new WannabeFunction() is BinaryFunction; // true
 
 Therefore, we decree that an object is a member of a function type if the object’s class has a call() method and that method is a member of the function type.
 
-### Isolates
+## Isolates
 
 Most computers, even on mobile platforms, have multi-core CPUs. To take advantage of all those cores, developers traditionally use shared-memory threads running concurrently. However, shared-state concurrency is error prone and can lead to complicated code.
 
@@ -1852,7 +1856,7 @@ Instead of threads, all Dart code runs inside of isolates. Each isolate has its 
 
 For more information, see the dart:isolate library documentation.
 
-### Typedefs
+## Typedefs
 
 In Dart, functions are objects, just like strings and numbers are objects. A typedef, or function-type alias, gives a function type a name that you can use when declaring fields and return types. A typedef retains type information when a function type is assigned to a variable.
 
@@ -1908,7 +1912,7 @@ Because typedefs are simply aliases, they offer a way to check the type of any f
       assert(sort is Compare<int>); // True!
     }
 
-### Metadata
+## Metadata
 
 Use metadata to give additional information about your code. A metadata annotation begins with the character @, followed by either a reference to a compile-time constant (such as deprecated) or a call to a constant constructor.
 
@@ -1947,11 +1951,11 @@ And here’s an example of using that @todo annotation:
     
 Metadata can appear before a library, class, typedef, type parameter, constructor, factory, function, field, parameter, or variable declaration and before an import or export directive. You can retrieve metadata at runtime using reflection.
 
-### Comments
+## Comments
 
 Dart supports single-line comments, multi-line comments, and documentation comments.
 
-#### Single-line comments
+### Single-line comments
 
 A single-line comment begins with `//`. Everything between `//` and the end of line is ignored by the Dart compiler
 
@@ -1960,7 +1964,7 @@ A single-line comment begins with `//`. Everything between `//` and the end of l
       print('Welcome to my Llama farm!');
     }
 
-#### Multi-line comments
+### Multi-line comments
 
 A multi-line comment begins with `/*` and ends with `*/`. Everything between /* and */ is ignored by the Dart compiler (unless the comment is a documentation comment; see the next section). Multi-line comments can nest.
 
@@ -1974,7 +1978,7 @@ A multi-line comment begins with `/*` and ends with `*/`. Everything between /* 
       larry.clean();
        */
     }
-#### Documentation comments
+### Documentation comments
 
 Documentation comments are multi-line or single-line comments that begin with `///` or `/**`. Using `///` on consecutive lines has the same effect as a multi-line doc comment.
 
