@@ -5,6 +5,7 @@
         - [Reading a file](#reading-a-file)
         - [Writing a file](#writing-a-file)
     - [Getting environment information](#getting-environment-information)
+    - [Setting exit codes](#setting-exit-codes)
 
 <!-- /TOC -->
 # Dart commonly used operations howto
@@ -75,3 +76,30 @@ Platform provides other useful properties that give information about the machin
     Platform.isMacOS()
     Platform.numberOfProcessors
     Platform.script.path
+
+## Setting exit codes
+The dart:io library defines a top-level property, `exitCode`, that you can change to set the exit code for the current invocation of the Dart VM. An exit code is a number passed from the Dart program to the parent process to indicate the success, failure, or other state of the execution of the program.
+
+The dcat program sets the exit code in the _handleError() function to indicate that an error occcurred during execution.
+
+    Future _handleError(String path) async {
+      if (await FileSystemEntity.isDirectory(path)) {
+        stderr.writeln('error: $path is a directory');
+      } else {
+        exitCode = 2;
+      }
+    }
+    
+An exit code of 2 indicates that the program encountered an error.
+
+An alternative to using exitCode is to use the top-level `exit()` function, which sets the exit code and quits the program immediately. For example, the _handleError() function could call `exit(2)` instead of setting exitCode to 2, but exit() would quit the program and it might not process all of the files on the command line.
+
+Generally speaking, you are better off using the exitCode property, which sets the exit code but allows the program to continue through to its natural completion.
+
+Although you can use any number for an exit code, by convention, the codes in the table below have the following meanings:
+
+    Code	Meaning
+---
+    0	    Success
+    1	    Warnings
+    2	    Errors
