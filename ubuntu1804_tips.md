@@ -29,6 +29,7 @@
     - [Command replacement](#command-replacement)
     - [包管理工具apt](#包管理工具apt)
         - [参考文档：](#参考文档)
+        - [ubuntu software updata出错:](#ubuntu-software-updata出错)
         - [apt-get 常用实例](#apt-get-常用实例)
     - [缩放图像的工具](#缩放图像的工具)
     - [显示文件的前几行内容](#显示文件的前几行内容)
@@ -279,12 +280,63 @@ will produce the output:
 
     ddd Sun Jun 10 00:06:00 CST 2018
 
+ ### How to enable and disable services in  Systemd init
+ 
+Systemd is a system & service manager tool supported by Ubuntu 15.04 and newer releases. The command line tool used for managing services, for instance, starting and stopping, &  enabling and disabling services on boot time.
+
+* To start a service in systemd run the command as shown:
+
+        systemctl start service-name   
+
+* To verify that the service is running, run
+
+        systemctl status service-name   
+* To stop the service running service
+
+        systenctl stop service-name
+
+* To enable apache2 service on boot up run
+
+        systemctl enable apache2
+
+* To disable apache2 service on boot up run
+
+        systemctl disable apache2
+
+* To restart the service
+
+        systemctl restart apache2
+* To check whether the service is currently configured to start on the next boot up
+
+        systemctl is-enabled apache2
+        
+* To check whether the service is active
+
+        systemctl is-active apache2               
+
 ### 包管理工具apt
 
 #### 参考文档： 
 
 * [APT工作原理](https://blog.csdn.net/buguyiqie/article/details/4948661 "APT工作原理")
 * [apt-get常用命令及工作原理](https://blog.csdn.net/mosquito_zm/article/details/63684608 "apt-get常用命令及工作原理")
+
+#### ubuntu software updata出错:
+
+sudo apt-get update出错信息如下:
+
+    E: Repository 'https://storage.googleapis.com/download.dartlang.org/linux/debian unstable Release' changed its 'Origin' value from 'Google, Inc.' to 'Google LLC'
+    N: This must be accepted explicitly before updates for this repository can be applied. See apt-secure(8) manpage for details.
+
+>解决方法:
+
+Just run
+
+    sudo apt update
+And you will be prompted to accept the new Origin of the repository
+
+    Do you want to accept these changes and continue updating from this repository? [y/N] 
+And that’s it.
 
 #### apt-get 常用实例
 
