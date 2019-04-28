@@ -475,3 +475,36 @@ sed命令行格式为：
     替换匹配行中的某个字符串
 
     sed -i '/匹配字符串/s/替换源字符串/替换目标字符串/g' filename
+    
+### Linux常用操作
+    
+#### 执行 程序：“.”（ 点号）
+
+使用 点号 执行 没有 加 执行 权限 的 脚本 可以 正常 运行 
+
+> [root@ localhost ~]# . ./HelloWorld. sh
+
+#### 别名： alias
+
+alias 可用 于 创建 命令 的 别名，用于简化命令输入。比如：
+
+> [root@ localhost ~]# alias myShutdown=' shutdown -h now'
+
+#### 任务前后台切换：bg、 fg、 jobs:
+
+bg用于将任务放置后台运行，一般与Ctrl+ z、fg、&符号联合使用。典型的使用场景是运行比较耗时的任务。若在前台执行，在任务完成前将会一直占用当前终端，此时 就可以将这类任务放置后台。 
+
+    [root@ localhost ~]# tar -zcf usr. tgz /usr 
+    tar: Removing leading `/' from member names 
+
+    #此处 用 Ctrl+ z 组合 键 暂停 前台 任务 
+    [1]+ Stopped tar -zcf usr. tgz /usr 
+    [root@ localhost ~]# jobs  #查看暂停的 任务， 刚刚的tar任务编号为 1:
+    [1]+ Stopped tar -zcf usr. tgz /usr 
+    [root@ localhost ~]# bg 1 #放置后台继续运行 
+    [1]+ tar -zcf usr. tgz /usr & #tar任务继续运行了
+    [root@ localhost ~]# fg 1 #fg把后台任务调至前台运行 
+    tar -zcf usr. tgz /usr 
+    #可以一开始就将命令放入后台运行 
+    [root@ localhost ~]# tar -zcf usr. tgz /usr &
+
