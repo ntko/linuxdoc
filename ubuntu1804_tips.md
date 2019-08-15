@@ -507,4 +507,13 @@ bg用于将任务放置后台运行，一般与Ctrl+ z、fg、&符号联合使�
     tar -zcf usr. tgz /usr 
     #可以一开始就将命令放入后台运行 
     [root@ localhost ~]# tar -zcf usr. tgz /usr &
+    
+#### 设置Ubuntu终端字体
+
+Ctrl+Alt+F3..F6切换终端。
+如果在高分屏下，可以通过
+
+    sudo dpkg-reconfigure console-setup
+
+设置终端字体。
 
