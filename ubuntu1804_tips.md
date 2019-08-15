@@ -517,3 +517,14 @@ Ctrl+Alt+F3..F6切换终端。
 
 设置终端字体。
 
+#### EFI GRUB2启动菜单总是30秒
+
+    sudo vim /etc/default/grub
+    
+add:
+
+    GRUB_RECORDFAIL_TIMEOUT=10
+and run:
+
+    sudo update-grub
+
