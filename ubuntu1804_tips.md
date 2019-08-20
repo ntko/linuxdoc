@@ -11,7 +11,7 @@
     - [Ubuntu中设定点击DOCK图标最小化应用.](#ubuntu中设定点击dock图标最小化应用)
     - [How to disable animations in Ubuntu 17.10 or 18.04?](#how-to-disable-animations-in-ubuntu-1710-or-1804)
     - [安装Sogou拼音再次卸载之后,软件更新报错](#安装sogou拼音再次卸载之后软件更新报错)
-    - [[6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)](#6-ways-to-speed-up-your-ubuntu-pchttpswwwhowtogeekcom1157976-ways-to-speed-up-ubuntu)
+    - [6 Ways to Speed Up Your Ubuntu PC](#6-ways-to-speed-up-your-ubuntu-pc)
     - [Enable additional repositories for more software](#enable-additional-repositories-for-more-software)
     - [安装Gnome扩展](#安装gnome扩展)
     - [安装多媒体相关软件](#安装多媒体相关软件)
@@ -140,7 +140,9 @@ from: [http://tipsonubuntu.com/2018/04/15/click-icon-minimize-application-window
 
 >  `sudo apt-get update`
 
-### [6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)
+### 6 Ways to Speed Up Your Ubuntu PC
+
+REFER TO: [6 Ways to Speed Up Your Ubuntu PC](https://www.howtogeek.com/115797/6-ways-to-speed-up-ubuntu/)
 
 1. Install Preload: `sudo apt-get install preload`
 1. Control Startup apps: DOCK->search startup,可以看到启动应用.如果要看到所有的系统启动应用,可以运行`sudo sed -i "s/NoDisplay=true/NoDisplay=false/g" /etc/xdg/autostart/*.desktop`,然后重新查看启用应用就可以看到系统应用了.
