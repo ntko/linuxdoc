@@ -40,6 +40,8 @@
         - [任务前后台切换：bg、 fg、 jobs:](#任务前后台切换bg-fg-jobs)
         - [设置Ubuntu终端字体](#设置ubuntu终端字体)
         - [EFI GRUB2启动菜单总是30秒](#efi-grub2启动菜单总是30秒)
+        - [解决使用lvm之后关机慢问题](#解决使用lvm之后关机慢问题)
+        - [调整亮度](#调整亮度)
 
 <!-- /TOC -->
 
@@ -536,3 +538,12 @@ and run:
 
     sudo update-grub
 
+#### 解决使用lvm之后关机慢问题
+
+显示：WARNING: Failed to connect to lvmetad. Falling back to internal scanning.
+
+    Setting use_lvmetad to 0 instead of 1 in /etc/lvm/lvm.conf
+
+#### 调整亮度
+
+软件仓库中搜索Brightness.安装Gnome扩展:`Adjust Brightness Icon`
